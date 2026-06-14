@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bl31w8xr8lg16"]
+
+[ext_resource type="Script" uid="uid://dn3p7f8tpmhnf" path="res://scripts/choice_button.gd" id="1_u2sgh"]
+
+[node name="ChoiceButton" type="Button" unique_id=1407000055]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "choice button"
+script = ExtResource("1_u2sgh")
