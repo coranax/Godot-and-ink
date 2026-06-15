@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://d118s5e01ss6h"]
 
 [ext_resource type="Theme" uid="uid://dobwjtu50e46r" path="res://art/main_theme.tres" id="1_1bvp3"]
-[ext_resource type="Texture2D" uid="uid://cey7w2b5nx60i" path="res://art/border.png" id="1_ig7tw"]
 [ext_resource type="Texture2D" uid="uid://qii8nig507mn" path="res://art/chinatown at night.jpg" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://c0bah1eknsah0" path="res://scripts/ink_handler.gd" id="3_1bvp3"]
 
@@ -14,6 +13,7 @@ theme = ExtResource("1_1bvp3")
 script = ExtResource("3_1bvp3")
 
 [node name="BgImage" type="TextureRect" parent="Ink" unique_id=2023718796]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = -7.0
 offset_top = -105.0
@@ -22,7 +22,29 @@ offset_bottom = 2967.0
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_h2yge")
 
+[node name="Setting" type="RichTextLabel" parent="Ink" unique_id=783281957]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 552.0
+offset_right = 232.0
+offset_bottom = 576.0
+text = "This is the setting ;)"
+
+[node name="TextBox" type="RichTextLabel" parent="Ink" unique_id=1847073007]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 32.0
+offset_top = 592.0
+offset_right = 718.0
+offset_bottom = 766.0
+bbcode_enabled = true
+text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
+autowrap_mode = 2
+
 [node name="StorySoFar" type="RichTextLabel" parent="Ink" unique_id=883589103]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 72.0
@@ -33,125 +55,41 @@ bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
 
-[node name="Setting" type="RichTextLabel" parent="Ink" unique_id=783281957]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 552.0
-offset_right = 232.0
-offset_bottom = 576.0
-text = "This is the setting ;)"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Ink" unique_id=325009052]
-layout_mode = 0
-offset_top = 560.0
-offset_right = 1198.0
-offset_bottom = 798.0
-
-[node name="MarginContainerTextBox" type="MarginContainer" parent="Ink/HBoxContainer" unique_id=1601535667]
-custom_minimum_size = Vector2(750, 0)
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="NinePatchRectTextBox" type="NinePatchRect" parent="Ink/HBoxContainer/MarginContainerTextBox" unique_id=1613734624]
-layout_mode = 2
-texture = ExtResource("1_ig7tw")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
-[node name="MarginContainerTextBoxInner" type="MarginContainer" parent="Ink/HBoxContainer/MarginContainerTextBox" unique_id=64135865]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="TextBox" type="RichTextLabel" parent="Ink/HBoxContainer/MarginContainerTextBox/MarginContainerTextBoxInner" unique_id=1847073007]
+[node name="ChoiceContainer" type="VBoxContainer" parent="Ink" unique_id=1848148210]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-bbcode_enabled = true
-text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
-autowrap_mode = 2
-
-[node name="MarginContainerButtonBox" type="MarginContainer" parent="Ink/HBoxContainer" unique_id=1519716237]
-custom_minimum_size = Vector2(240, 0)
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="NinePatchRectButtonBox" type="NinePatchRect" parent="Ink/HBoxContainer/MarginContainerButtonBox" unique_id=106766006]
-layout_mode = 2
-texture = ExtResource("1_ig7tw")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
-[node name="MarginContainerButtonBoxInner" type="MarginContainer" parent="Ink/HBoxContainer/MarginContainerButtonBox" unique_id=2127966329]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="ChoiceContainer" type="VBoxContainer" parent="Ink/HBoxContainer/MarginContainerButtonBox/MarginContainerButtonBoxInner" unique_id=1848148210]
-layout_mode = 2
+layout_mode = 0
+offset_left = 805.0
+offset_top = 616.0
+offset_right = 905.0
+offset_bottom = 716.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MarginContainerMenuBox" type="MarginContainer" parent="Ink/HBoxContainer" unique_id=821626046]
-custom_minimum_size = Vector2(160, 0)
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="NinePatchRectTextBox" type="NinePatchRect" parent="Ink/HBoxContainer/MarginContainerMenuBox" unique_id=585800606]
-layout_mode = 2
-texture = ExtResource("1_ig7tw")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
-[node name="MarginContainerMenuBoxInner" type="MarginContainer" parent="Ink/HBoxContainer/MarginContainerMenuBox" unique_id=1284275028]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Ink/HBoxContainer/MarginContainerMenuBox/MarginContainerMenuBoxInner" unique_id=1255813682]
-layout_mode = 2
+[node name="MenuContainer" type="VBoxContainer" parent="Ink" unique_id=55435968]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 1019.0
+offset_top = 612.0
+offset_right = 1119.0
+offset_bottom = 712.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ShowSSF" type="Button" parent="Ink/HBoxContainer/MarginContainerMenuBox/MarginContainerMenuBoxInner/VBoxContainer" unique_id=610821744]
+[node name="ShowSSF" type="Button" parent="Ink/MenuContainer" unique_id=1994614605]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Show Story"
 
-[node name="HSplitContainer" type="HSplitContainer" parent="Ink/HBoxContainer/MarginContainerMenuBox/MarginContainerMenuBoxInner/VBoxContainer" unique_id=138165995]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-
-[node name="ResetButton" type="Button" parent="Ink/HBoxContainer/MarginContainerMenuBox/MarginContainerMenuBoxInner/VBoxContainer" unique_id=1973226808]
+[node name="ResetButton" type="Button" parent="Ink/MenuContainer" unique_id=1457377140]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "reset"
 
-[connection signal="pressed" from="Ink/HBoxContainer/MarginContainerMenuBox/MarginContainerMenuBoxInner/VBoxContainer/ShowSSF" to="Ink" method="_on_show_ssf_pressed"]
-[connection signal="pressed" from="Ink/HBoxContainer/MarginContainerMenuBox/MarginContainerMenuBoxInner/VBoxContainer/ResetButton" to="Ink" method="_on_reset_button_pressed"]
+[node name="BgMusic" type="AudioStreamPlayer2D" parent="." unique_id=2105300051]
+unique_name_in_owner = true
+volume_db = 2.0
+autoplay = true
+
+[connection signal="pressed" from="Ink/MenuContainer/ShowSSF" to="Ink" method="_on_show_ssf_pressed"]
+[connection signal="pressed" from="Ink/MenuContainer/ResetButton" to="Ink" method="_on_reset_button_pressed"]

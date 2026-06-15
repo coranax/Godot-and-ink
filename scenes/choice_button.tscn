@@ -10,3 +10,5 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "choice button"
 script = ExtResource("1_u2sgh")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

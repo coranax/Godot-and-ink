@@ -10,11 +10,16 @@ var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 @onready var _ink_player = NewInkPlayer.new()
 
 # my variables uwu
-@onready var text_box: RichTextLabel = $HBoxContainer/MarginContainerTextBox/MarginContainerTextBoxInner/TextBox
-@onready var ssf_label: RichTextLabel = $StorySoFar
-@onready var choice_container: VBoxContainer = $HBoxContainer/MarginContainerButtonBox/MarginContainerButtonBoxInner/ChoiceContainer
+@onready var bg_image: TextureRect = %BgImage
+@onready var setting: RichTextLabel = %Setting
+@onready var text_box: RichTextLabel = %TextBox
+@onready var ssf_label: RichTextLabel = %StorySoFar
+@onready var choice_container: VBoxContainer = %ChoiceContainer
+@onready var bg_music: AudioStreamPlayer2D = %BgMusic
 
 var story_so_far: String = ""
+const bgi_path: String = "res://art/"
+const bgm_path: String = "res://music/"
 
 
 func _ready():
@@ -35,17 +40,13 @@ func _ready():
 	
 	ssf_label.set_scroll_follow(true)
 	ssf_label.visible = false
-
-
-
+	
 
 func _story_loaded(successfully: bool):
 	if !successfully:
 		return
-
 	# _observe_variables()
 	# _bind_externals()
-
 	_continue_story()
 
 
@@ -54,33 +55,39 @@ func _continue_story():
 	while _ink_player.can_continue:
 		text += _ink_player.continue_story() + "[br]" # the br is here in BBC code to add extra white space after each paragraph/line break
 		text_box.set_text(text)
+		text_box.scroll_to_line(0)
+		
+		build_setting(_ink_player.current_tags)
 		
 	if _ink_player.has_choices:
 		story_so_far += text_box.get_text()
 		ssf_label.set_text(story_so_far)
 		
-		clear_buttons()
+		clear_choice_buttons()
 		var id: int = 0 # this will increment in order to assign the button to the correct choice index
 		
 		for choice in _ink_player.current_choices: # 'current_choices' contains a list of the choices, as strings.
-			build_buttons(choice, id)
+			build_choice_buttons(choice, id)
 			id += 1
 		
 	else: # This code runs when the story reaches it's end.
 		print("The End")
 
-func clear_buttons() -> void:
+# clear the CHOICE buttons, or else they will just multiply forever and ever
+func clear_choice_buttons() -> void:
 	for button in get_tree().get_nodes_in_group("choice_buttons"):
 		button.queue_free()
 
-func build_buttons(choice, id) -> void:
+# build the CHOICE buttons
+func build_choice_buttons(choice, id) -> void:
 	var cbutt: ChoiceButton = ChoiceButt.instantiate()
 	choice_container.add_child(cbutt)
 	cbutt.add_to_group("choice_buttons")
-	cbutt.set_text(choice.text)	
+	cbutt.set_text(choice.text)
 	cbutt.button_id = id
 	cbutt.pressed.connect(choice_button_press.bind(id))
 
+# a choice button has been pressed # blessed
 func choice_button_press(id) -> void:
 	_select_choice(id)
 
@@ -89,10 +96,10 @@ func _select_choice(index):
 	_ink_player.choose_choice_index(index)
 	_continue_story()
 
-
+# clear and reset the story
 func _on_reset_button_pressed() -> void:
 	story_so_far = ""
-	clear_buttons()
+	clear_choice_buttons()
 	_ink_player.reset()
 	_continue_story()
 
@@ -100,12 +107,48 @@ func _on_reset_button_pressed() -> void:
 func facy_text(_label: Label) -> void: # todo!!!!!
 	pass
 
-
+# hide or unhide the story so far
 func _on_show_ssf_pressed() -> void:
 	if ssf_label.visible == true:
 		ssf_label.visible = false
 	elif ssf_label.visible == false:
 		ssf_label.visible = true
+
+# these are the game elements that will change based on the "setting" (ink tags) of the story
+func build_setting(tags: Array) -> void:
+	# remember to change bgi_path and bgm_path if needed
+	
+	# i don't think this dictionary is strictly necessary, but keeping it in case i need to access this info ig
+	var tag_dict = {
+		"setting" = "",
+		"image" = "",
+		"music" = ""
+	}
+	
+	# deliminatior
+	var d = ": "
+
+	if !tags.is_empty(): # make sure there are tags
+		for t in tags: # loop through - remember t is the string not the count variable
+			if t.get_slice_count(d) > 1: # verify that the deliminator is present
+				if t.contains("setting"): # check for dictionary key or setting/whatever
+					tag_dict["setting"] = t.get_slice(d, 1) # get the value after the deliminator, store it in the dict
+					setting.set_text(tag_dict["setting"]) # set the value appropriately
+				if t.contains("image"):
+					tag_dict["image"] = t.get_slice(d, 1)
+					bg_image.texture = load(bgi_path + tag_dict["image"])
+				if t.contains("music"):
+					tag_dict["music"] = t.get_slice(d, 1)
+					bg_music.stream = load(bgm_path + tag_dict["music"])
+					bg_music.play()
+
+
+
+
+
+
+
+
 
 
 # Uncomment to bind an external function.
