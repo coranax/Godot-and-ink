@@ -4,6 +4,8 @@ Creating a framework for a visual novel using Godot and ink
 
 some credits/notes
 
+- https://github.com/ephread/inkgd is the addon used and does the heavy lifting. was i supposed to fork this? i don't know enough to know if i'm doing this correctly... anyway, the addon was not in the AssetLib so i had to manually install it for some reason.
+
 - all the pictures were taken by me.
 
 - https://www.lipsum.com/ for the filler text.

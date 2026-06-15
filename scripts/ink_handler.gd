@@ -41,6 +41,12 @@ func _ready():
 	ssf_label.set_scroll_follow(true)
 	ssf_label.visible = false
 	
+	for mb in get_tree().get_nodes_in_group("menu_buttons"):
+		mb.pressed.connect(play_click.bind())
+
+func play_click() -> void:
+	print("you made it")
+	$"../Click".play()
 
 func _story_loaded(successfully: bool):
 	if !successfully:
@@ -86,6 +92,7 @@ func build_choice_buttons(choice, id) -> void:
 	cbutt.set_text(choice.text)
 	cbutt.button_id = id
 	cbutt.pressed.connect(choice_button_press.bind(id))
+	cbutt.pressed.connect(play_click.bind())
 
 # a choice button has been pressed # blessed
 func choice_button_press(id) -> void:

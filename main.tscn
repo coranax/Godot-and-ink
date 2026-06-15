@@ -3,6 +3,8 @@
 [ext_resource type="Theme" uid="uid://dobwjtu50e46r" path="res://art/main_theme.tres" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://qii8nig507mn" path="res://art/chinatown at night.jpg" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://c0bah1eknsah0" path="res://scripts/ink_handler.gd" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://dn3p7f8tpmhnf" path="res://scripts/choice_button.gd" id="4_1bvp3"]
+[ext_resource type="AudioStream" uid="uid://b60djvjxyn2yy" path="res://sfx/click.wav" id="5_lquwl"]
 
 [node name="Main" type="Node" unique_id=2009671156]
 
@@ -76,20 +78,32 @@ offset_bottom = 712.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ShowSSF" type="Button" parent="Ink/MenuContainer" unique_id=1994614605]
+[node name="ShowSSF" type="Button" parent="Ink/MenuContainer" unique_id=1705415393 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Show Story"
+script = ExtResource("4_1bvp3")
+metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
-[node name="ResetButton" type="Button" parent="Ink/MenuContainer" unique_id=1457377140]
+[node name="ResetButton" type="Button" parent="Ink/MenuContainer" unique_id=1636853273 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "reset"
+script = ExtResource("4_1bvp3")
+metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
+
+[node name="ChoiceButton" type="Button" parent="Ink/MenuContainer" unique_id=1016713049 groups=["menu_buttons"]]
+layout_mode = 2
+text = "asdsaDAS "
+script = ExtResource("4_1bvp3")
+metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
 [node name="BgMusic" type="AudioStreamPlayer2D" parent="." unique_id=2105300051]
 unique_name_in_owner = true
-volume_db = 2.0
-autoplay = true
+
+[node name="Click" type="AudioStreamPlayer2D" parent="." unique_id=650924603]
+stream = ExtResource("5_lquwl")
+volume_db = 1.0
 
 [connection signal="pressed" from="Ink/MenuContainer/ShowSSF" to="Ink" method="_on_show_ssf_pressed"]
 [connection signal="pressed" from="Ink/MenuContainer/ResetButton" to="Ink" method="_on_reset_button_pressed"]

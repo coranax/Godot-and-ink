@@ -123,7 +123,7 @@ End of Chapter
 -> DONE
 
 === ch2 ===
-# setting: chapter 2 # image: philadelphia skyline.jpg # music: sad-song.wav
+# setting: chapter 2 # image: philadelphia skyline.jpg # music: weird-song.wav
 Chapter 2
 + [start ch2] -> one
 
@@ -171,7 +171,7 @@ End of Chapter
 -> DONE
 
 === ch3 ===
-# setting: chapter 3 # image: pittsburg 3 point park.jpg
+# setting: chapter 3 # image: pittsburg 3 point park.jpg # music: crazy-song.wav
 Chapter 3
 + [start ch3] -> one
 
