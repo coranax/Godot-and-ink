@@ -102,6 +102,7 @@ metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 unique_name_in_owner = true
 
 [node name="Click" type="AudioStreamPlayer2D" parent="." unique_id=650924603]
+unique_name_in_owner = true
 stream = ExtResource("5_lquwl")
 volume_db = 1.0
 

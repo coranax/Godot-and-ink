@@ -16,6 +16,7 @@ var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 @onready var ssf_label: RichTextLabel = %StorySoFar
 @onready var choice_container: VBoxContainer = %ChoiceContainer
 @onready var bg_music: AudioStreamPlayer2D = %BgMusic
+@onready var click: AudioStreamPlayer2D = %Click
 
 var story_so_far: String = ""
 const bgi_path: String = "res://art/"
@@ -38,15 +39,15 @@ func _ready():
 	# continue the story.
 	_ink_player.create_story()
 	
+	# get the story so far scrolling situated
 	ssf_label.set_scroll_follow(true)
 	ssf_label.visible = false
 	
+	# make sure menu buttons make a click sound
 	for mb in get_tree().get_nodes_in_group("menu_buttons"):
 		mb.pressed.connect(play_click.bind())
 
-func play_click() -> void:
-	print("you made it")
-	$"../Click".play()
+
 
 func _story_loaded(successfully: bool):
 	if !successfully:
@@ -121,6 +122,10 @@ func _on_show_ssf_pressed() -> void:
 	elif ssf_label.visible == false:
 		ssf_label.visible = true
 
+# attached the choice buttons and menu buttons to this
+func play_click() -> void:
+	click.play()
+
 # these are the game elements that will change based on the "setting" (ink tags) of the story
 func build_setting(tags: Array) -> void:
 	# remember to change bgi_path and bgm_path if needed
@@ -135,6 +140,7 @@ func build_setting(tags: Array) -> void:
 	# deliminatior
 	var d = ": "
 
+	# TODO IMPORTANT HELLO TURN THE MUSIC BACK ON WHEN U R DONE, CAITLYN!!!!!
 	if !tags.is_empty(): # make sure there are tags
 		for t in tags: # loop through - remember t is the string not the count variable
 			if t.get_slice_count(d) > 1: # verify that the deliminator is present
@@ -144,10 +150,10 @@ func build_setting(tags: Array) -> void:
 				if t.contains("image"):
 					tag_dict["image"] = t.get_slice(d, 1)
 					bg_image.texture = load(bgi_path + tag_dict["image"])
-				if t.contains("music"):
-					tag_dict["music"] = t.get_slice(d, 1)
-					bg_music.stream = load(bgm_path + tag_dict["music"])
-					bg_music.play()
+				#if t.contains("music"):
+					#tag_dict["music"] = t.get_slice(d, 1)
+					#bg_music.stream = load(bgm_path + tag_dict["music"])
+					#bg_music.play()
 
 
 
