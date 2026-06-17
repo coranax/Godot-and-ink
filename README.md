@@ -2,7 +2,7 @@
 Creating a framework for a visual novel using Godot and ink
 
 
-some credits/notes
+some credits
 
 - https://github.com/ephread/inkgd is the addon used and does the heavy lifting. was i supposed to fork this? i don't know enough to know if i'm doing this correctly... anyway, the addon was not in the AssetLib so i had to manually install it for some reason.
 
@@ -19,3 +19,11 @@ but he was kind enough to leave this link in response to a comment:
 https://github.com/averyhiebert/inkgd/tree/godot4-updatetemplates/addons/inkgd/editor/templates
 
 they didn't work out of the box, i had to create a subfolder /Nodes/ then i was able to use the them.
+
+
+notes for future me
+
+keywords in comments:
+- UNIQUE: variable/path will vary per project
+- RESERVED: don't accidentaly use this name/var/whatever elsewhere
+check the notes at the beginning of the ink for reminders on related to ink strategy
