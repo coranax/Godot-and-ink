@@ -16,8 +16,11 @@ var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 @onready var time_line: RichTextLabel = %TimeLine
 @onready var choice_container: VBoxContainer = %ChoiceContainer
 @onready var time_line_container: VBoxContainer = %TimeLineContainer
+@onready var time_line_panel: Panel = %TLCPanel
 @onready var bg_music: AudioStreamPlayer2D = %BgMusic
 @onready var click: AudioStreamPlayer2D = %Click
+@onready var mute_music_butt: CheckButton = $MCPanel/MenuContainer/MuteMusic
+@onready var mute_sfx_butt: CheckButton = $MCPanel/MenuContainer/MuteSFX
 # waow that's a lot. 
 
 # record the players progress in various ways
@@ -57,7 +60,7 @@ func _ready():
 	ssf_label.set_scroll_follow(true)
 	ssf_label.visible = false
 	time_line.visible = false
-	time_line_container.visible = false
+	time_line_panel.visible = false
 	
 	# make sure menu buttons make a click sound. UNIQUE
 	for mb in get_tree().get_nodes_in_group("menu_buttons"):
@@ -177,6 +180,7 @@ func build_choice_buttons(choice, id: int) -> void:
 	cbutt.pressed.connect(choice_button_press.bind(id))
 	cbutt.pressed.connect(play_click.bind())
 	cbutt.set_h_size_flags(4)
+	cbutt.set_v_size_flags(1)
 
 # clear the CHOICE buttons, or else they will just multiply forever and ever
 func clear_choice_buttons() -> void:
@@ -212,16 +216,17 @@ func build_tl_buttons(prog: Array) -> void:
 		tlbutt.set_text(p)
 		tlbutt.button_id = int(p)
 		tlbutt.pressed.connect(play_click.bind())
-		tlbutt.pressed.connect(show_time_line.bind(p))
+		tlbutt.pressed.connect(show_time_line_text.bind(p))
 		tlbutt.set_h_size_flags(4)
+		tlbutt.set_v_size_flags(1)
 
 # hide or unhide the timeline
 func _on_show_tl_pressed() -> void:
-	if time_line_container.visible == true:
-		time_line_container.visible = false
+	if time_line_panel.visible:
+		time_line_panel.visible = false
 		clear_tl_buttons()
-	elif time_line_container.visible == false:
-		time_line_container.visible = true
+	elif !time_line_panel.visible:
+		time_line_panel.visible = true
 		# build the timeline buttons based on the prog array
 		build_tl_buttons(prog_array)
 
@@ -230,7 +235,7 @@ func clear_tl_buttons() -> void:
 	for button in get_tree().get_nodes_in_group("time_line_buttons"):
 		button.queue_free()
 
-func show_time_line(id: String) -> void: # do i want to take this as an int or a string???? hmmmm....
+func show_time_line_text(id: String) -> void: # do i want to take this as an int or a string???? hmmmm....
 	print("the id is: " + id)
 	pass
 
@@ -266,8 +271,8 @@ func build_prog_array(tags: Array):
 		if !prog_array.has(get_tag_slice(tags,"finish")): # make sure this section is not already included
 			prog_array.append(get_tag_slice(tags, "finish"))
 			prog_array.sort()
-			_on_show_tl_pressed()
-			_on_show_tl_pressed()
+			_on_show_tl_pressed() # calling this twice forces the buttons to clear and reset based on the new sort
+			_on_show_tl_pressed() # is this sloppy? maybe!
 
 # this was the straw that broke the camel's back. i have no explination. UNIQUE
 func build_prog_dict(tags: Array) -> void:
@@ -297,15 +302,15 @@ func play_click() -> void:
 
 # mute the music and the sfx. probably need some error handling UNIQUE
 func mute_music() -> void:
-	if $MenuContainer/MuteMusic.button_pressed:
+	if mute_music_butt.button_pressed:
 		AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"), true)
-	elif !$MenuContainer/MuteMusic.button_pressed:
+	elif !mute_music_butt.button_pressed:
 		AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"), false)
 
 func mute_sfx() -> void:
-	if $MenuContainer/MuteSFX.button_pressed:
+	if mute_sfx_butt.button_pressed:
 		AudioServer.set_bus_mute(AudioServer.get_bus_index("SFX"), true)
-	elif !$MenuContainer/MuteSFX.button_pressed:
+	elif !mute_sfx_butt.button_pressed:
 		AudioServer.set_bus_mute(AudioServer.get_bus_index("SFX"), false)
 
 

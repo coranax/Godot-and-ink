@@ -74,66 +74,85 @@ bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
 
-[node name="ChoiceContainer" type="VBoxContainer" parent="Ink" unique_id=1848148210]
+[node name="CCPanel" type="Panel" parent="Ink" unique_id=711204633]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(190, 210)
 layout_mode = 0
-offset_left = 805.0
-offset_top = 616.0
-offset_right = 905.0
-offset_bottom = 716.0
+offset_left = 770.0
+offset_top = 546.0
+offset_right = 960.0
+offset_bottom = 756.0
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="ChoiceContainer" type="VBoxContainer" parent="Ink/CCPanel" unique_id=1848148210]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 190.0
+offset_bottom = 210.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="TimeLineContainer" type="VBoxContainer" parent="Ink" unique_id=1760597362]
+[node name="TLCPanel" type="Panel" parent="Ink" unique_id=1556868842]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 898.0
-offset_top = 88.0
-offset_right = 1126.0
-offset_bottom = 574.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
+offset_left = 938.0
+offset_top = 49.0
+offset_right = 1166.0
+offset_bottom = 535.0
+size_flags_vertical = 3
 
-[node name="MenuContainer" type="VBoxContainer" parent="Ink" unique_id=55435968]
+[node name="TimeLineContainer" type="VBoxContainer" parent="Ink/TLCPanel" unique_id=1760597362]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 1019.0
-offset_top = 612.0
-offset_right = 1119.0
-offset_bottom = 712.0
+offset_right = 228.0
+offset_bottom = 486.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ShowTL" type="Button" parent="Ink/MenuContainer" unique_id=312946587 groups=["menu_buttons"]]
+[node name="MCPanel" type="Panel" parent="Ink" unique_id=339725949]
+layout_mode = 0
+offset_left = 987.0
+offset_top = 557.0
+offset_right = 1177.0
+offset_bottom = 767.0
+size_flags_vertical = 3
+
+[node name="MenuContainer" type="VBoxContainer" parent="Ink/MCPanel" unique_id=55435968]
+layout_mode = 0
+offset_right = 190.0
+offset_bottom = 210.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ShowTL" type="Button" parent="Ink/MCPanel/MenuContainer" unique_id=312946587 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Show Time Line"
 script = ExtResource("4_1bvp3")
 metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
-[node name="ShowSSF" type="Button" parent="Ink/MenuContainer" unique_id=1705415393 groups=["menu_buttons"]]
+[node name="ShowSSF" type="Button" parent="Ink/MCPanel/MenuContainer" unique_id=1705415393 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Show Story"
 script = ExtResource("4_1bvp3")
 metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
-[node name="ResetButton" type="Button" parent="Ink/MenuContainer" unique_id=1636853273 groups=["menu_buttons"]]
+[node name="ResetButton" type="Button" parent="Ink/MCPanel/MenuContainer" unique_id=1636853273 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "reset"
 script = ExtResource("4_1bvp3")
 metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
-[node name="MuteMusic" type="CheckButton" parent="Ink/MenuContainer" unique_id=771877000 groups=["menu_buttons"]]
+[node name="MuteMusic" type="CheckButton" parent="Ink/MCPanel/MenuContainer" unique_id=771877000 groups=["menu_buttons"]]
 layout_mode = 2
 text = "mute music"
 
-[node name="MuteSFX" type="CheckButton" parent="Ink/MenuContainer" unique_id=445091133 groups=["menu_buttons"]]
+[node name="MuteSFX" type="CheckButton" parent="Ink/MCPanel/MenuContainer" unique_id=445091133 groups=["menu_buttons"]]
 layout_mode = 2
 text = "mute sfx"
 
@@ -147,8 +166,8 @@ stream = ExtResource("5_lquwl")
 volume_db = 1.0
 bus = &"SFX"
 
-[connection signal="pressed" from="Ink/MenuContainer/ShowTL" to="Ink" method="_on_show_tl_pressed"]
-[connection signal="pressed" from="Ink/MenuContainer/ShowSSF" to="Ink" method="_on_show_ssf_pressed"]
-[connection signal="pressed" from="Ink/MenuContainer/ResetButton" to="Ink" method="_on_reset_button_pressed"]
-[connection signal="pressed" from="Ink/MenuContainer/MuteMusic" to="Ink" method="mute_music"]
-[connection signal="pressed" from="Ink/MenuContainer/MuteSFX" to="Ink" method="mute_sfx"]
+[connection signal="pressed" from="Ink/MCPanel/MenuContainer/ShowTL" to="Ink" method="_on_show_tl_pressed"]
+[connection signal="pressed" from="Ink/MCPanel/MenuContainer/ShowSSF" to="Ink" method="_on_show_ssf_pressed"]
+[connection signal="pressed" from="Ink/MCPanel/MenuContainer/ResetButton" to="Ink" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="Ink/MCPanel/MenuContainer/MuteMusic" to="Ink" method="mute_music"]
+[connection signal="pressed" from="Ink/MCPanel/MenuContainer/MuteSFX" to="Ink" method="mute_sfx"]

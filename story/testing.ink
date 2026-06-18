@@ -17,7 +17,7 @@ LIST ch1_locations = ch0101, ch0102, ch0103
 LIST ch2_locations = ch0201, ch0202, ch0203
 LIST ch3_locations = ch0301, ch0302, ch0303
 LIST non_locations = no_loc
-VAR current_loc = ""
+VAR current_loc = no_loc
 
 
 -> index
@@ -26,7 +26,7 @@ VAR current_loc = ""
 ~ current_loc = no_loc
 # setting: index # image: chinatown at night.jpg # music: kinda-chill.wav
 
-This  is the title :) hohoho
+This  is the title :) hohoho { current_loc }
 + [go to chapter 1] -> ch1
 + [go to chapter 2] -> ch2
 + [go to chapter 3] -> ch3
