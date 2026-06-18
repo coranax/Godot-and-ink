@@ -60,8 +60,7 @@ bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
 
-[node name="CCPanel" type="Panel" parent="Ink" unique_id=711204633]
-unique_name_in_owner = true
+[node name="ChoicePanel" type="Panel" parent="Ink" unique_id=711204633]
 custom_minimum_size = Vector2(190, 210)
 layout_mode = 0
 offset_left = 770.0
@@ -71,7 +70,7 @@ offset_bottom = 756.0
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="ChoiceContainer" type="VBoxContainer" parent="Ink/CCPanel" unique_id=1848148210]
+[node name="ChoiceContainer" type="VBoxContainer" parent="Ink/ChoicePanel" unique_id=1848148210]
 unique_name_in_owner = true
 layout_mode = 0
 offset_right = 190.0
@@ -81,21 +80,20 @@ size_flags_vertical = 4
 
 [node name="TLTextPanel" type="Panel" parent="Ink" unique_id=1086979202]
 unique_name_in_owner = true
-visible = false
 layout_mode = 0
-offset_left = 107.0
-offset_top = 21.0
-offset_right = 857.0
-offset_bottom = 481.0
+offset_left = 524.0
+offset_top = 53.0
+offset_right = 924.0
+offset_bottom = 488.0
 
 [node name="TLTextContainer" type="VBoxContainer" parent="Ink/TLTextPanel" unique_id=675665395]
 layout_mode = 0
-offset_right = 750.0
-offset_bottom = 460.0
+offset_right = 400.0
+offset_bottom = 435.0
 
 [node name="TimeLineText" type="RichTextLabel" parent="Ink/TLTextPanel/TLTextContainer" unique_id=745737525]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(100, 400)
+custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_lquwl")
 bbcode_enabled = true
@@ -109,7 +107,6 @@ text = "close"
 
 [node name="TLChoicePanel" type="Panel" parent="Ink" unique_id=1556868842]
 unique_name_in_owner = true
-visible = false
 layout_mode = 0
 offset_left = 939.0
 offset_top = 19.0
@@ -125,6 +122,12 @@ offset_right = 228.0
 offset_bottom = 486.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Ink/TLChoicePanel/TLChoiceContainer" unique_id=1045418963]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+text = "Select a Section"
+horizontal_alignment = 1
 
 [node name="MCPanel" type="Panel" parent="Ink" unique_id=339725949]
 layout_mode = 0
@@ -151,7 +154,7 @@ metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 [node name="ShowSSF" type="Button" parent="Ink/MCPanel/MenuContainer" unique_id=1705415393 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Show Story"
+text = "Show Story So Far"
 script = ExtResource("4_1bvp3")
 metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
