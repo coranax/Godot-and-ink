@@ -13,7 +13,9 @@ var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 @onready var setting: RichTextLabel = %Setting
 @onready var text_box: RichTextLabel = %TextBox
 @onready var ssf_label: RichTextLabel = %StorySoFar
+@onready var time_line: RichTextLabel = %TimeLine
 @onready var choice_container: VBoxContainer = %ChoiceContainer
+@onready var time_line_container: VBoxContainer = %TimeLineContainer
 @onready var bg_music: AudioStreamPlayer2D = %BgMusic
 @onready var click: AudioStreamPlayer2D = %Click
 # waow that's a lot. 
@@ -54,6 +56,8 @@ func _ready():
 	# get the story so far scrolling situated
 	ssf_label.set_scroll_follow(true)
 	ssf_label.visible = false
+	time_line.visible = false
+	time_line_container.visible = false
 	
 	# make sure menu buttons make a click sound. UNIQUE
 	for mb in get_tree().get_nodes_in_group("menu_buttons"):
@@ -163,8 +167,8 @@ func get_tag_slice(tags: Array, item: String) -> String:
 # BUTTONS!!
 # -------------------------------------------------------------------------- #
 
-# build the CHOICE buttons
-func build_choice_buttons(choice, id) -> void:
+# build the CHOICE buttons. this function is called within a loop!
+func build_choice_buttons(choice, id: int) -> void:
 	var cbutt: ChoiceButton = ChoiceButt.instantiate()
 	choice_container.add_child(cbutt)
 	cbutt.add_to_group("choice_buttons") # UNIQUE RESERVED - don't use this name for another group
@@ -172,6 +176,7 @@ func build_choice_buttons(choice, id) -> void:
 	cbutt.button_id = id
 	cbutt.pressed.connect(choice_button_press.bind(id))
 	cbutt.pressed.connect(play_click.bind())
+	cbutt.set_h_size_flags(4)
 
 # clear the CHOICE buttons, or else they will just multiply forever and ever
 func clear_choice_buttons() -> void:
@@ -179,7 +184,7 @@ func clear_choice_buttons() -> void:
 		button.queue_free()
 
 # a choice button has been pressed # blessed
-func choice_button_press(id) -> void:
+func choice_button_press(id: int) -> void:
 	_select_choice(id)
 
 # clear and reset the story
@@ -187,6 +192,7 @@ func _on_reset_button_pressed() -> void:
 	story_so_far = ""
 	prog_array = []
 	clear_choice_buttons()
+	clear_tl_buttons()
 	_ink_player.reset()
 	_continue_story()
 
@@ -197,6 +203,36 @@ func _on_show_ssf_pressed() -> void:
 	elif ssf_label.visible == false:
 		ssf_label.visible = true
 
+# build the TIMELINE buttons - this is called in the build_prog_array function. messy!
+func build_tl_buttons(prog: Array) -> void:
+	for p in prog:
+		var tlbutt: ChoiceButton = ChoiceButt.instantiate() # it's not really a choice button but whatever. she's fine.
+		time_line_container.add_child(tlbutt)
+		tlbutt.add_to_group("time_line_buttons") # UNIQUE RESERVED - don't use this name for another group
+		tlbutt.set_text(p)
+		tlbutt.button_id = int(p)
+		tlbutt.pressed.connect(play_click.bind())
+		tlbutt.pressed.connect(show_time_line.bind(p))
+		tlbutt.set_h_size_flags(4)
+
+# hide or unhide the timeline
+func _on_show_tl_pressed() -> void:
+	if time_line_container.visible == true:
+		time_line_container.visible = false
+		clear_tl_buttons()
+	elif time_line_container.visible == false:
+		time_line_container.visible = true
+		# build the timeline buttons based on the prog array
+		build_tl_buttons(prog_array)
+
+# clear the TIMELINE buttons, or else they will just multiply forever and ever
+func clear_tl_buttons() -> void:
+	for button in get_tree().get_nodes_in_group("time_line_buttons"):
+		button.queue_free()
+
+func show_time_line(id: String) -> void: # do i want to take this as an int or a string???? hmmmm....
+	print("the id is: " + id)
+	pass
 
 # -------------------------------------------------------------------------- #
 # Game Settings and Progress
@@ -224,13 +260,14 @@ func build_setting(tags: Array) -> void:
 		bg_music.stream = load(bgm_path + setting_dict["music"])
 		bg_music.play()
 
-
 # stores the player's progress in an array. "finish". UNIQUE
 func build_prog_array(tags: Array):
-	
 	if is_tag_listed(tags, "finish"):
 		if !prog_array.has(get_tag_slice(tags,"finish")): # make sure this section is not already included
-			prog_array.append(int(get_tag_slice(tags, "finish")))
+			prog_array.append(get_tag_slice(tags, "finish"))
+			prog_array.sort()
+			_on_show_tl_pressed()
+			_on_show_tl_pressed()
 
 # this was the straw that broke the camel's back. i have no explination. UNIQUE
 func build_prog_dict(tags: Array) -> void:

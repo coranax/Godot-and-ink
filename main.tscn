@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://dn3p7f8tpmhnf" path="res://scripts/choice_button.gd" id="4_1bvp3"]
 [ext_resource type="AudioStream" uid="uid://b60djvjxyn2yy" path="res://sfx/click.wav" id="5_lquwl"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
+
 [node name="Main" type="Node" unique_id=2009671156]
 
 [node name="Ink" type="Control" parent="." unique_id=176582262]
@@ -47,12 +49,27 @@ autowrap_mode = 2
 
 [node name="StorySoFar" type="RichTextLabel" parent="Ink" unique_id=883589103]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
-offset_left = 72.0
+offset_left = 39.0
 offset_top = 72.0
-offset_right = 1112.0
+offset_right = 719.0
 offset_bottom = 542.0
+bbcode_enabled = true
+text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
+autowrap_mode = 2
+
+[node name="TimeLine" type="RichTextLabel" parent="Ink" unique_id=745737525]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 39.0
+offset_top = 72.0
+offset_right = 719.0
+offset_bottom = 542.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_lquwl")
 bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
@@ -68,7 +85,20 @@ offset_bottom = 716.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
+[node name="TimeLineContainer" type="VBoxContainer" parent="Ink" unique_id=1760597362]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 898.0
+offset_top = 88.0
+offset_right = 1126.0
+offset_bottom = 574.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
 [node name="MenuContainer" type="VBoxContainer" parent="Ink" unique_id=55435968]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 1019.0
@@ -77,6 +107,13 @@ offset_right = 1119.0
 offset_bottom = 712.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="ShowTL" type="Button" parent="Ink/MenuContainer" unique_id=312946587 groups=["menu_buttons"]]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Show Time Line"
+script = ExtResource("4_1bvp3")
+metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
 [node name="ShowSSF" type="Button" parent="Ink/MenuContainer" unique_id=1705415393 groups=["menu_buttons"]]
 layout_mode = 2
@@ -110,6 +147,7 @@ stream = ExtResource("5_lquwl")
 volume_db = 1.0
 bus = &"SFX"
 
+[connection signal="pressed" from="Ink/MenuContainer/ShowTL" to="Ink" method="_on_show_tl_pressed"]
 [connection signal="pressed" from="Ink/MenuContainer/ShowSSF" to="Ink" method="_on_show_ssf_pressed"]
 [connection signal="pressed" from="Ink/MenuContainer/ResetButton" to="Ink" method="_on_reset_button_pressed"]
 [connection signal="pressed" from="Ink/MenuContainer/MuteMusic" to="Ink" method="mute_music"]
