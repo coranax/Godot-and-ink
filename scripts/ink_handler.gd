@@ -11,12 +11,16 @@ var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 # my variables uwu
 @onready var bg_image: TextureRect = %BgImage
 @onready var setting: RichTextLabel = %Setting
+
 @onready var text_box: RichTextLabel = %TextBox
 @onready var ssf_label: RichTextLabel = %StorySoFar
-@onready var time_line: RichTextLabel = %TimeLine
 @onready var choice_container: VBoxContainer = %ChoiceContainer
-@onready var time_line_container: VBoxContainer = %TimeLineContainer
-@onready var time_line_panel: Panel = %TLCPanel
+
+@onready var time_line_text_panel: Panel = %TLTextPanel
+@onready var time_line_text: RichTextLabel = %TimeLineText
+@onready var time_line_choice_panel = %TLChoicePanel
+@onready var time_line_choice_container = %TLChoiceContainer
+
 @onready var bg_music: AudioStreamPlayer2D = %BgMusic
 @onready var click: AudioStreamPlayer2D = %Click
 @onready var mute_music_butt: CheckButton = $MCPanel/MenuContainer/MuteMusic
@@ -59,8 +63,8 @@ func _ready():
 	# get the story so far scrolling situated
 	ssf_label.set_scroll_follow(true)
 	ssf_label.visible = false
-	time_line.visible = false
-	time_line_panel.visible = false
+	time_line_text_panel.visible = false
+	time_line_choice_panel.visible = false
 	
 	# make sure menu buttons make a click sound. UNIQUE
 	for mb in get_tree().get_nodes_in_group("menu_buttons"):
@@ -211,7 +215,7 @@ func _on_show_ssf_pressed() -> void:
 func build_tl_buttons(prog: Array) -> void:
 	for p in prog:
 		var tlbutt: ChoiceButton = ChoiceButt.instantiate() # it's not really a choice button but whatever. she's fine.
-		time_line_container.add_child(tlbutt)
+		time_line_choice_container.add_child(tlbutt)
 		tlbutt.add_to_group("time_line_buttons") # UNIQUE RESERVED - don't use this name for another group
 		tlbutt.set_text(p)
 		tlbutt.button_id = int(p)
@@ -220,13 +224,13 @@ func build_tl_buttons(prog: Array) -> void:
 		tlbutt.set_h_size_flags(4)
 		tlbutt.set_v_size_flags(1)
 
-# hide or unhide the timeline
+# hide or unhide the timeline panel
 func _on_show_tl_pressed() -> void:
-	if time_line_panel.visible:
-		time_line_panel.visible = false
+	if time_line_choice_panel.visible:
+		time_line_choice_panel.visible = false
 		clear_tl_buttons()
-	elif !time_line_panel.visible:
-		time_line_panel.visible = true
+	elif !time_line_choice_panel.visible:
+		time_line_choice_panel.visible = true
 		# build the timeline buttons based on the prog array
 		build_tl_buttons(prog_array)
 
@@ -236,8 +240,24 @@ func clear_tl_buttons() -> void:
 		button.queue_free()
 
 func show_time_line_text(id: String) -> void: # do i want to take this as an int or a string???? hmmmm....
+
+	# should i disable some buttons while timeline is open?
+	var text = prog_dict[int(id)]["body"]
+	
+	if !time_line_text_panel.visible:
+		time_line_text_panel.visible = true
+		time_line_text.set_text("") # reset whatever was shown before
+		time_line_text.set_text(text)
+	elif time_line_text_panel.visible:
+		time_line_text.set_text(text)
+	
 	print("the id is: " + id)
-	pass
+
+func _on_close_tl_pressed() -> void:
+	if time_line_text_panel.visible:
+		time_line_text_panel.visible = false
+	pass # Replace with function body.
+
 
 # -------------------------------------------------------------------------- #
 # Game Settings and Progress

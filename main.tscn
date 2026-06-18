@@ -60,20 +60,6 @@ bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
 
-[node name="TimeLine" type="RichTextLabel" parent="Ink" unique_id=745737525]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 0
-offset_left = 39.0
-offset_top = 72.0
-offset_right = 719.0
-offset_bottom = 542.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_lquwl")
-bbcode_enabled = true
-text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
-autowrap_mode = 2
-
 [node name="CCPanel" type="Panel" parent="Ink" unique_id=711204633]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(190, 210)
@@ -93,17 +79,45 @@ offset_bottom = 210.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="TLCPanel" type="Panel" parent="Ink" unique_id=1556868842]
+[node name="TLTextPanel" type="Panel" parent="Ink" unique_id=1086979202]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
-offset_left = 938.0
-offset_top = 49.0
-offset_right = 1166.0
-offset_bottom = 535.0
+offset_left = 107.0
+offset_top = 21.0
+offset_right = 857.0
+offset_bottom = 481.0
+
+[node name="TLTextContainer" type="VBoxContainer" parent="Ink/TLTextPanel" unique_id=675665395]
+layout_mode = 0
+offset_right = 750.0
+offset_bottom = 460.0
+
+[node name="TimeLineText" type="RichTextLabel" parent="Ink/TLTextPanel/TLTextContainer" unique_id=745737525]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 400)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_lquwl")
+bbcode_enabled = true
+text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
+autowrap_mode = 2
+
+[node name="CloseTLTextPanel" type="Button" parent="Ink/TLTextPanel/TLTextContainer" unique_id=1912987259]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "close"
+
+[node name="TLChoicePanel" type="Panel" parent="Ink" unique_id=1556868842]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 939.0
+offset_top = 19.0
+offset_right = 1167.0
+offset_bottom = 505.0
 size_flags_vertical = 3
 
-[node name="TimeLineContainer" type="VBoxContainer" parent="Ink/TLCPanel" unique_id=1760597362]
+[node name="TLChoiceContainer" type="VBoxContainer" parent="Ink/TLChoicePanel" unique_id=1760597362]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
@@ -166,6 +180,7 @@ stream = ExtResource("5_lquwl")
 volume_db = 1.0
 bus = &"SFX"
 
+[connection signal="pressed" from="Ink/TLTextPanel/TLTextContainer/CloseTLTextPanel" to="Ink" method="_on_close_tl_pressed"]
 [connection signal="pressed" from="Ink/MCPanel/MenuContainer/ShowTL" to="Ink" method="_on_show_tl_pressed"]
 [connection signal="pressed" from="Ink/MCPanel/MenuContainer/ShowSSF" to="Ink" method="_on_show_ssf_pressed"]
 [connection signal="pressed" from="Ink/MCPanel/MenuContainer/ResetButton" to="Ink" method="_on_reset_button_pressed"]
