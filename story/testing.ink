@@ -5,7 +5,7 @@
 
 // setting names and bg images will only change per chapter in this project. this could be changed by modifying the build_setting function in the godot code to behave differently. chapters are knots.
 
-// to change setting name, music, or song, use syntax "setting: setting name"
+// to change setting name, image, or song, use syntax "setting: setting name"
 // the deliminator is ": " with space included
 
 // you may want to remove the whole index and chapter end things. i mainly did that for development ease.
@@ -24,7 +24,7 @@ VAR current_loc = no_loc
 
 === index ===
 ~ current_loc = no_loc
-# setting: index # image: chinatown at night.jpg # music: kinda-chill.wav
+# setting: index # image: chinatown at night.jpg # oldsound: kinda-chill.wav # music: 0
 
 This  is the title :) hohoho { current_loc }
 + [go to chapter 1] -> ch1
@@ -36,7 +36,7 @@ This  is the title :) hohoho { current_loc }
 
 === ch1 ===
 ~ current_loc = no_loc
-# music: sad-song.wav # setting: chapter 1 # image: ocean city new jersey.jpg
+# oldsound: sad-song.wav # setting: chapter 1 # image: ocean city new jersey.jpg  # music: 1
 Chapter 1
 + [start ch1] -> one
 
@@ -106,7 +106,7 @@ End of Chapter
 
 === ch2 ===
 ~ current_loc = no_loc
-# setting: chapter 2 # image: philadelphia skyline.jpg # music: weird-song.wav
+# setting: chapter 2 # image: philadelphia skyline.jpg # oldsound: weird-song.wav  # music: 2
 Chapter 2
 + [start ch2] -> one
 
@@ -162,7 +162,7 @@ End of Chapter
 
 === ch3 ===
 ~ current_loc = no_loc
-# setting: chapter 3 # image: pittsburg 3 point park.jpg # music: crazy-song.wav
+# setting: chapter 3 # image: pittsburg 3 point park.jpg # oldsound: crazy-song.wav  # music: 3
 Chapter 3
 + [start ch3] -> one
 

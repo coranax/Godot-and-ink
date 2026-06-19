@@ -6,6 +6,8 @@ var NewInkPlayer = load("res://addons/inkgd/ink_player.gd")
 
 var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 
+
+
 @onready var _ink_player = NewInkPlayer.new()
 
 # my variables uwu
@@ -25,6 +27,8 @@ var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 @onready var click: AudioStreamPlayer2D = %Click
 @onready var mute_music_butt: CheckButton = $MCPanel/MenuContainer/MuteMusic
 @onready var mute_sfx_butt: CheckButton = $MCPanel/MenuContainer/MuteSFX
+
+@onready var fade_music: AudioStreamPlayer2D = %FadeMusic
 # waow that's a lot. 
 
 # record the players progress in various ways
@@ -66,10 +70,18 @@ func _ready():
 	time_line_text_panel.visible = false
 	time_line_choice_panel.visible = false
 	
+	# you have to start the player or else the program will be very angry with you
+	var music_tween = get_tree().create_tween()
+	fade_music.play()
+	fade_music.volume_db = -30
+	music_tween.tween_property(fade_music, "volume_db", 1, 3)
+	
 	# make sure menu buttons make a click sound. UNIQUE
 	for mb in get_tree().get_nodes_in_group("menu_buttons"):
 		mb.pressed.connect(play_click.bind())
 
+func test_me() -> void:
+	print("im here ;)")
 
 # -------------------------------------------------------------------------- #
 # Story and ink stuff
@@ -106,10 +118,10 @@ func _continue_story():
 		build_prog_dict(_ink_player.current_tags)
 		
 		clear_choice_buttons() # clear the old buttons first
-		var id: int = 0 # this will increment in order to assign the button to the correct choice index
+		var choice_index: int = 0 # this will increment in order to assign the button to the correct choice index
 		for choice in _ink_player.current_choices: # 'current_choices' contains a list of the choices, as strings.
-			build_choice_buttons(choice, id)
-			id += 1
+			build_choice_buttons(choice, choice_index)
+			choice_index += 1
 		
 	else: # This code runs when the story reaches it's end.
 		# final update to story so far
@@ -201,6 +213,9 @@ func _on_reset_button_pressed() -> void:
 	prog_array = []
 	clear_choice_buttons()
 	clear_tl_buttons()
+	ssf_label.visible = false
+	time_line_choice_panel.visible = false	
+	time_line_text_panel.visible = false
 	_ink_player.reset()
 	_continue_story()
 
@@ -239,8 +254,8 @@ func clear_tl_buttons() -> void:
 	for button in get_tree().get_nodes_in_group("time_line_buttons"):
 		button.queue_free()
 
-func show_time_line_text(id: String) -> void: # do i want to take this as an int or a string???? hmmmm....
-
+# displays the timeline text if one of the timeline buttons is pressed
+func show_time_line_text(id: String) -> void:
 	# should i disable some buttons while timeline is open?
 	var text = prog_dict[int(id)]["body"]
 	
@@ -249,9 +264,10 @@ func show_time_line_text(id: String) -> void: # do i want to take this as an int
 		time_line_text.set_text("") # reset whatever was shown before
 		time_line_text.set_text(text)
 	elif time_line_text_panel.visible:
-		time_line_text.set_text(text)
-	
-	print("the id is: " + id)
+		if text == time_line_text.get_text():
+			time_line_text_panel.visible = false
+		else:
+			time_line_text.set_text(text)
 
 func _on_close_tl_pressed() -> void:
 	if time_line_text_panel.visible:
@@ -280,10 +296,17 @@ func build_setting(tags: Array) -> void:
 	if is_tag_listed(tags, "image"):
 		setting_dict["image"] = get_tag_slice(tags, "image")
 		bg_image.texture = load(bgi_path + setting_dict["image"])
+	# this would be for if you didn't want to use the fading music for whatever reason
+	#if is_tag_listed(tags, "oldsound"):
+		#setting_dict["oldsound"] = get_tag_slice(tags, "oldsound")
+		#bg_music.stream = load(bgm_path + setting_dict["oldsound"])
+		#bg_music.play()
 	if is_tag_listed(tags, "music"):
 		setting_dict["music"] = get_tag_slice(tags, "music")
-		bg_music.stream = load(bgm_path + setting_dict["music"])
-		bg_music.play()
+		var new_song = int(setting_dict["music"])
+		var old_song = fade_music.get_stream_playback().get_current_clip_index()
+		if !new_song == old_song:
+			fade_music.get_stream_playback().switch_to_clip(new_song)
 
 # stores the player's progress in an array. "finish". UNIQUE
 func build_prog_array(tags: Array):
@@ -316,6 +339,15 @@ func build_prog_dict(tags: Array) -> void:
 # Sound (these could also fit with BUTTONS but alas)
 # -------------------------------------------------------------------------- #
 
+# this will play the next song and loop through all the clips (i don't need this lol)
+func advance_music() -> void:
+	var i = fade_music.get_stream_playback().get_current_clip_index()
+	if i < 3:
+		i += 1
+	else:
+		i = 0
+	fade_music.get_stream_playback().switch_to_clip(i)
+
 # attached the choice buttons and menu buttons to this
 func play_click() -> void:
 	click.play()
@@ -333,6 +365,17 @@ func mute_sfx() -> void:
 	elif !mute_sfx_butt.button_pressed:
 		AudioServer.set_bus_mute(AudioServer.get_bus_index("SFX"), false)
 
+
+# -------------------------------------------------------------------------- #
+# Saving and Loading
+# -------------------------------------------------------------------------- #
+
+func _on_save_pressed() -> void:
+	pass # Replace with function body.
+
+
+func _on_load_pressed() -> void:
+	pass # Replace with function body.
 
 
 

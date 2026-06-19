@@ -4,7 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://qii8nig507mn" path="res://art/chinatown at night.jpg" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://c0bah1eknsah0" path="res://scripts/ink_handler.gd" id="3_1bvp3"]
 [ext_resource type="Script" uid="uid://dn3p7f8tpmhnf" path="res://scripts/choice_button.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://bg78f25f7hpc1" path="res://choice_container.gd" id="4_272bh"]
 [ext_resource type="AudioStream" uid="uid://b60djvjxyn2yy" path="res://sfx/click.wav" id="5_lquwl"]
+[ext_resource type="AudioStream" uid="uid://cl6prss0gbfit" path="res://audio_stream_interactive.tres" id="6_7mycd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
 
@@ -77,9 +79,11 @@ offset_right = 190.0
 offset_bottom = 210.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("4_272bh")
 
 [node name="TLTextPanel" type="Panel" parent="Ink" unique_id=1086979202]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 524.0
 offset_top = 53.0
@@ -100,13 +104,14 @@ bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
 
-[node name="CloseTLTextPanel" type="Button" parent="Ink/TLTextPanel/TLTextContainer" unique_id=1912987259]
+[node name="CloseTLTextPanel" type="Button" parent="Ink/TLTextPanel/TLTextContainer" unique_id=1912987259 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "close"
 
 [node name="TLChoicePanel" type="Panel" parent="Ink" unique_id=1556868842]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 939.0
 offset_top = 19.0
@@ -173,15 +178,28 @@ text = "mute music"
 layout_mode = 2
 text = "mute sfx"
 
-[node name="BgMusic" type="AudioStreamPlayer2D" parent="." unique_id=2105300051]
+[node name="Save" type="Button" parent="Ink/MCPanel/MenuContainer" unique_id=1257681161 groups=["menu_buttons"]]
+layout_mode = 2
+text = "Save"
+
+[node name="Load" type="Button" parent="Ink/MCPanel/MenuContainer" unique_id=688421892 groups=["menu_buttons"]]
+layout_mode = 2
+text = "Load"
+
+[node name="BgMusic" type="AudioStreamPlayer2D" parent="Ink" unique_id=2105300051]
 unique_name_in_owner = true
 bus = &"Music"
 
-[node name="Click" type="AudioStreamPlayer2D" parent="." unique_id=650924603]
+[node name="Click" type="AudioStreamPlayer2D" parent="Ink" unique_id=650924603]
 unique_name_in_owner = true
 stream = ExtResource("5_lquwl")
 volume_db = 1.0
 bus = &"SFX"
+
+[node name="FadeMusic" type="AudioStreamPlayer2D" parent="Ink" unique_id=994359074]
+unique_name_in_owner = true
+stream = ExtResource("6_7mycd")
+bus = &"Music"
 
 [connection signal="pressed" from="Ink/TLTextPanel/TLTextContainer/CloseTLTextPanel" to="Ink" method="_on_close_tl_pressed"]
 [connection signal="pressed" from="Ink/MCPanel/MenuContainer/ShowTL" to="Ink" method="_on_show_tl_pressed"]
@@ -189,3 +207,5 @@ bus = &"SFX"
 [connection signal="pressed" from="Ink/MCPanel/MenuContainer/ResetButton" to="Ink" method="_on_reset_button_pressed"]
 [connection signal="pressed" from="Ink/MCPanel/MenuContainer/MuteMusic" to="Ink" method="mute_music"]
 [connection signal="pressed" from="Ink/MCPanel/MenuContainer/MuteSFX" to="Ink" method="mute_sfx"]
+[connection signal="pressed" from="Ink/MCPanel/MenuContainer/Save" to="Ink" method="_on_save_pressed"]
+[connection signal="pressed" from="Ink/MCPanel/MenuContainer/Load" to="Ink" method="_on_load_pressed"]
