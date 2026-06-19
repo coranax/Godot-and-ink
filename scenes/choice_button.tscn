@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bl31w8xr8lg16"]
 
 [ext_resource type="Script" uid="uid://dn3p7f8tpmhnf" path="res://scripts/choice_button.gd" id="1_u2sgh"]
-[ext_resource type="AudioStream" uid="uid://b60djvjxyn2yy" path="res://sfx/click.wav" id="2_0i16n"]
 
 [node name="ChoiceButton" type="Button" unique_id=1407000055]
 anchors_preset = 15
@@ -11,10 +10,5 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "choice button"
 script = ExtResource("1_u2sgh")
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1120296219]
-stream = ExtResource("2_0i16n")
-volume_db = 2.0
-playback_type = 1
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

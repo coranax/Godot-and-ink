@@ -1,14 +1,13 @@
-# warning-ignore-all:return_value_discarded
+extends Node
+# this manager handles text, graphics, and UI elements
 
-extends Control
-
-var NewInkPlayer = load("res://addons/inkgd/ink_player.gd")
 
 var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 
 
-
-@onready var _ink_player = NewInkPlayer.new()
+@onready var story_player = %InkManager
+@onready var buttons = %ButtonManager
+@onready var audio = %SoundManager
 
 # my variables uwu
 @onready var bg_image: TextureRect = %BgImage
@@ -16,19 +15,20 @@ var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 
 @onready var text_box: RichTextLabel = %TextBox
 @onready var ssf_label: RichTextLabel = %StorySoFar
+
 @onready var choice_container: VBoxContainer = %ChoiceContainer
 
 @onready var time_line_text_panel: Panel = %TLTextPanel
 @onready var time_line_text: RichTextLabel = %TimeLineText
+
 @onready var time_line_choice_panel = %TLChoicePanel
 @onready var time_line_choice_container = %TLChoiceContainer
 
 @onready var bg_music: AudioStreamPlayer2D = %BgMusic
-@onready var click: AudioStreamPlayer2D = %Click
-@onready var mute_music_butt: CheckButton = $MCPanel/MenuContainer/MuteMusic
-@onready var mute_sfx_butt: CheckButton = $MCPanel/MenuContainer/MuteSFX
-
 @onready var fade_music: AudioStreamPlayer2D = %FadeMusic
+@onready var click: AudioStreamPlayer2D = %Click
+@onready var mute_music_butt: CheckButton = $"../MCPanel/MenuContainer/MuteMusic"
+@onready var mute_sfx_butt: CheckButton = $"../MCPanel/MenuContainer/MuteSFX"
 # waow that's a lot. 
 
 # record the players progress in various ways
@@ -40,29 +40,19 @@ var ch_id: int = 0
 var ch_title: String = ""
 var ch_body: String
 
-var current_loc
+var current_loc # UNIQUE
 var loc_list: Array = ["ch0101", "ch0102", "ch0103", "ch0201", "ch0202", "ch0203", "ch0301", "ch0302", "ch0303"]
 
 # these two may vary per project but it must be done. UNIQUE
 const bgi_path: String = "res://art/"
 const bgm_path: String = "res://music/"
 
+# this is a silly, hacked, solution to get the choice buttons loaded ONCE to start
+var need_butts: bool = true # it can't go in the ready func bc the story won't be loaded yet
+
 
 func _ready():
-	# Adds the player to the tree.
-	add_child(_ink_player)
-
-	# Replace the example path with the path to your story. UNIQUE
-	_ink_player.ink_file = load("res://story/testing.ink.json")
-
-	# It's recommended to load the story in the background.
-	_ink_player.loads_in_background = true
-
-	_ink_player.loaded.connect(_story_loaded)
-
-	# Creates the story. 'loaded' will be emitted once Ink is ready
-	# continue the story.
-	_ink_player.create_story()
+	story_player.var_array = ["current_loc"]
 	
 	# get the story so far scrolling situated
 	ssf_label.set_scroll_follow(true)
@@ -80,72 +70,17 @@ func _ready():
 	for mb in get_tree().get_nodes_in_group("menu_buttons"):
 		mb.pressed.connect(play_click.bind())
 
-func test_me() -> void:
-	print("im here ;)")
 
 # -------------------------------------------------------------------------- #
 # Story and ink stuff
 # -------------------------------------------------------------------------- #
 
-# is the story loaded?
-func _story_loaded(successfully: bool):
-	if !successfully:
-		return
-	_observe_variables()
-	# _bind_externals()
-	_continue_story()
+func set_text_box(text: String)-> void:
+	text_box.set_text(text)
 
-# this one is doing a lot
-func _continue_story():
-	var text: String = ""
-	while _ink_player.can_continue:
-		 # += is important here else it will just show last line from ink
-		text += _ink_player.continue_story() + "[br]" # the br is here in BBC code to add extra white space after each paragraph/line break
-		text_box.set_text(text)
-		text_box.scroll_to_line(0)
-		
-		# gathers the tags and uses them to apply the appropriate settings
-		build_setting(_ink_player.current_tags)
-		# progress array tracks the "finish" tag UNIQUE
-		build_prog_array(_ink_player.current_tags)
-		
-	if _ink_player.has_choices:
-		# this needs to be here instead of above because otherwise each paragraph is repeated until the story hits a choice point
-		story_so_far += text_box.get_text()
-		ssf_label.set_text(story_so_far)
-		
-		# prog dict tracks the "record" tag UNIQUE
-		build_prog_dict(_ink_player.current_tags)
-		
-		clear_choice_buttons() # clear the old buttons first
-		var choice_index: int = 0 # this will increment in order to assign the button to the correct choice index
-		for choice in _ink_player.current_choices: # 'current_choices' contains a list of the choices, as strings.
-			build_choice_buttons(choice, choice_index)
-			choice_index += 1
-		
-	else: # This code runs when the story reaches it's end.
-		# final update to story so far
-		story_so_far += text_box.get_text()
-		ssf_label.set_text(story_so_far)
-		# clear buttons
-		clear_choice_buttons()
-		print("The End")
-		print(prog_array)
-		print(prog_dict)
+func set_ssf(text: String)-> void:
+	ssf_label.set_text(text)
 
-# '_select_choice' is a function that will take the index of your selection and continue the story.
-func _select_choice(index):
-	_ink_player.choose_choice_index(index)
-	_continue_story()
-
-#You can observe multiple variables by putting adding them in the array. UNIQUE
-func _observe_variables():
-	_ink_player.observe_variables(["current_loc"], self, "_variable_changed")
-
-func _variable_changed(variable_name, new_value):
-	if variable_name == "current_loc": # UNIQUE
-		current_loc = str(new_value)
-	print("Variable '%s' changed to: %s" %[variable_name, new_value])
 
 # this works hand in hand with the next one. would have liked to do it in one but i'm only so brave
 func is_tag_listed(tags: Array, item: String) -> bool:
@@ -205,19 +140,23 @@ func clear_choice_buttons() -> void:
 
 # a choice button has been pressed # blessed
 func choice_button_press(id: int) -> void:
-	_select_choice(id)
+	story_player.select_choice(id)
+	text_box.scroll_to_line(0)
+
 
 # clear and reset the story
 func _on_reset_button_pressed() -> void:
-	story_so_far = ""
+	set_ssf("")
 	prog_array = []
+	
 	clear_choice_buttons()
 	clear_tl_buttons()
+	
 	ssf_label.visible = false
-	time_line_choice_panel.visible = false	
+	time_line_choice_panel.visible = false
 	time_line_text_panel.visible = false
-	_ink_player.reset()
-	_continue_story()
+	
+	story_player.reset()
 
 # hide or unhide the story so far
 func _on_show_ssf_pressed() -> void:
@@ -317,10 +256,18 @@ func build_prog_array(tags: Array):
 			_on_show_tl_pressed() # calling this twice forces the buttons to clear and reset based on the new sort
 			_on_show_tl_pressed() # is this sloppy? maybe!
 
-# this was the straw that broke the camel's back. i have no explination. UNIQUE
+# this is called when there are choices since that is where the finish tag is. UNIQUE
 func build_prog_dict(tags: Array) -> void:
+	current_loc = str(story_player.changed_var_dict["current_loc"])
+
 	if loc_list.has(current_loc):
 		ch_body += text_box.get_text()
+	
+	if is_tag_listed(tags, "id"):
+		ch_id = int(get_tag_slice(tags, "id"))
+		
+	if is_tag_listed(tags, "title"):
+		ch_title = get_tag_slice(tags, "title")
 	
 	if is_tag_listed(tags, "finish"):
 		var new_prog: Dictionary = {
@@ -330,10 +277,6 @@ func build_prog_dict(tags: Array) -> void:
 			}
 		prog_dict.set(ch_id, new_prog)
 		ch_body = ""
-	elif is_tag_listed(tags, "id"):
-		ch_id = int(get_tag_slice(tags, "id"))
-	elif is_tag_listed(tags, "title"):
-		ch_title = get_tag_slice(tags, "title")
 
 # -------------------------------------------------------------------------- #
 # Sound (these could also fit with BUTTONS but alas)
@@ -376,20 +319,3 @@ func _on_save_pressed() -> void:
 
 func _on_load_pressed() -> void:
 	pass # Replace with function body.
-
-
-
-# -------------------------------------------------------------------------- #
-# IDK what this stuff is tbh
-# -------------------------------------------------------------------------- #
-
-
-
-# Uncomment to bind an external function.
-#
-# func _bind_externals():
-# 	_ink_player.bind_external_function("<function_name>", self, "_external_function")
-#
-#
-# func _external_function(arg1, arg2):
-# 	pass

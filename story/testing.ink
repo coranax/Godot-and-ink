@@ -1,24 +1,41 @@
 // test story by caitlyn pinkham 2026
 // it's not really a story it's lorem ipsum ;)
 
-// note this story uses only sticky options. the player can run through the story as many times as they want. this is mainly done for ease of development (and since i have a project in mind that will work that way)
+// note this story uses only sticky options.
 
-// setting names and bg images will only change per chapter in this project. this could be changed by modifying the build_setting function in the godot code to behave differently. chapters are knots.
+// tag notes:
+    // deliminator in game is ": " space included. use after any of the below tags
+    // tags don't need to be in any order, but where they are in the text DOES MATTER
+    
+    // can be used at top of knot or stitch:
+        // setting: to change setting text label
+        // image: changes the background image
+        // music: changes music track
+        // oldsound: i should get rid of this
+    
+    // must be used before **FIRST** choice in stitch:
+        // title: for progress dictionary and timeline
+        // id: for progress dictionary and timeline
+    
+    // must be used before **LAST** choice in stitch:
+        // finished:  for progress array, dictionary, and timeline
+        
+        //you know, i don't like that
 
-// to change setting name, image, or song, use syntax "setting: setting name"
-// the deliminator is ": " with space included
 
-// you may want to remove the whole index and chapter end things. i mainly did that for development ease.
+// index and chapter end sections are mainly for testing to navigate story at will
 
 
-// this will turn true while the player is in a section that should be recorded. it will then look for the "# record: " tag to tell the game engine what is being recorded.
-VAR record = false
+// why is this four lists? don't ask me i don't work here
+// these tell the engine to record the body text while in one of these locations
+// put them right under the string or knot name
 LIST ch1_locations = ch0101, ch0102, ch0103
 LIST ch2_locations = ch0201, ch0202, ch0203
 LIST ch3_locations = ch0301, ch0302, ch0303
 LIST non_locations = no_loc
 VAR current_loc = no_loc
 
+// story starts here
 
 -> index
 
@@ -42,16 +59,23 @@ Chapter 1
 
 = one
 ~ current_loc = ch0101
-# title: chapter 1-1 # id: 0101
 This is chapter 1 part one.... page 1
 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
+
+# title: chapter 1-1 # id: 0101
 + [next]
 
 - This is chapter 1 part one.... page 2
 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
+
 + [next]
 
 - This is chapter 1 part one.... page 3
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
+
 # finish: 0101
 + [next]
 
@@ -59,8 +83,12 @@ This is chapter 1 part one.... page 1
 
 = two
 ~ current_loc = ch0102
-# title: chapter 1-2 # setting: chapter 1-2 has a new setting BOYS # id: 0102
+# setting: chapter 1-2 has a new setting BOYS
 This is chapter 1 part two.... page 1
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
+
+# title: chapter 1-2 # id: 0102 
 + [next]
 
 - This is chapter 1 part two.... page 2
@@ -76,11 +104,10 @@ This is chapter 1 part two.... page 1
 
 = three
 ~ current_loc = ch0103
-# chapter 1-3
-# title: chapter 1-3 # id: 0103
 
 This is chapter 1 part three.... page 1
 
+# title: chapter 1-3 # id: 0103
 + [next]
 
 - This is chapter 1 part three.... page 2
@@ -112,13 +139,19 @@ Chapter 2
 
 = one
 ~ current_loc = ch0201
-# title: chapter 2-1 # id: 0201
 
 This is chapter 2 part one.... page 1
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
+# title: chapter 2-1 # id: 0201
 + [next]
 - This is chapter 2 part one.... page 2
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
 + [next]
 - This is chapter 2 part one.... page 3
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
 # finish: 0201
 + [next]
 
@@ -126,9 +159,9 @@ This is chapter 2 part one.... page 1
 
 = two
 ~ current_loc = ch0202
-# title: chapter 2-2 # id: 0202
 
 This is chapter 2 part two.... page 1
+# title: chapter 2-2 # id: 0202
 + [next]
 - This is chapter 2 part two.... page 2
 + [next]
@@ -140,9 +173,9 @@ This is chapter 2 part two.... page 1
 
 = three
 ~ current_loc = ch0203
-# title: chapter 2-3 # id: 0203
 
 This is chapter 2 part three.... page 1
+# title: chapter 2-3 # id: 0203
 + [next]
 - This is chapter 2 part three.... page 2
 + [next]
@@ -168,9 +201,9 @@ Chapter 3
 
 = one
 ~ current_loc = ch0301
-# title: chapter 3-1 # id: 0301
 
 This is chapter 3 part one.... page 1
+# title: chapter 3-1 # id: 0301
 + [next]
 - This is chapter 3 part one.... page 2
 + [next]
@@ -182,9 +215,9 @@ This is chapter 3 part one.... page 1
 
 = two
 ~ current_loc = ch0302
-# title: chapter 3-2 # id: 0302
 
 This is chapter 3 part two.... page 1
+# title: chapter 3-2 # id: 0302
 + [next]
 - This is chapter 3 part two.... page 2
 + [next]
@@ -196,9 +229,9 @@ This is chapter 3 part two.... page 1
 
 = three
 ~ current_loc = ch0303
-# title: chapter 3-3 # id: 0303
 
 This is chapter 3 part three.... page 1
+# title: chapter 3-3 # id: 0303
 + [next]
 - This is chapter 3 part three.... page 2
 + [next]

@@ -2,23 +2,37 @@
 
 [ext_resource type="Theme" uid="uid://dobwjtu50e46r" path="res://art/main_theme.tres" id="1_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://qii8nig507mn" path="res://art/chinatown at night.jpg" id="2_h2yge"]
-[ext_resource type="Script" uid="uid://c0bah1eknsah0" path="res://scripts/ink_handler.gd" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://c0bah1eknsah0" path="res://scripts/text_manager.gd" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://3rq4jwkvupp7" path="res://sound_manager.gd" id="3_5vw27"]
 [ext_resource type="Script" uid="uid://dn3p7f8tpmhnf" path="res://scripts/choice_button.gd" id="4_1bvp3"]
-[ext_resource type="Script" uid="uid://bg78f25f7hpc1" path="res://choice_container.gd" id="4_272bh"]
 [ext_resource type="AudioStream" uid="uid://b60djvjxyn2yy" path="res://sfx/click.wav" id="5_lquwl"]
 [ext_resource type="AudioStream" uid="uid://cl6prss0gbfit" path="res://audio_stream_interactive.tres" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://b8c7miaxbwj0k" path="res://scenes/ink_manager.tscn" id="7_272bh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
 
 [node name="Main" type="Node" unique_id=2009671156]
 
-[node name="Ink" type="Control" parent="." unique_id=176582262]
+[node name="InkyStory" type="Control" parent="." unique_id=176582262]
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_1bvp3")
+
+[node name="TextManager" type="Node" parent="InkyStory" unique_id=1443141056]
+unique_name_in_owner = true
 script = ExtResource("3_1bvp3")
 
-[node name="BgImage" type="TextureRect" parent="Ink" unique_id=2023718796]
+[node name="ButtonManager" type="Node" parent="InkyStory" unique_id=1994455832]
+unique_name_in_owner = true
+
+[node name="SoundManager" type="Node" parent="InkyStory" unique_id=1426242386]
+unique_name_in_owner = true
+script = ExtResource("3_5vw27")
+
+[node name="InkManager" parent="InkyStory" unique_id=1233377924 instance=ExtResource("7_272bh")]
+unique_name_in_owner = true
+
+[node name="BgImage" type="TextureRect" parent="InkyStory" unique_id=2023718796]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = -7.0
@@ -28,7 +42,7 @@ offset_bottom = 2967.0
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_h2yge")
 
-[node name="Setting" type="RichTextLabel" parent="Ink" unique_id=783281957]
+[node name="Setting" type="RichTextLabel" parent="InkyStory" unique_id=783281957]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 16.0
@@ -37,7 +51,7 @@ offset_right = 693.0
 offset_bottom = 576.0
 text = "This is the setting ;)"
 
-[node name="TextBox" type="RichTextLabel" parent="Ink" unique_id=1847073007]
+[node name="TextBox" type="RichTextLabel" parent="InkyStory" unique_id=1847073007]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
@@ -49,7 +63,7 @@ bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
 
-[node name="StorySoFar" type="RichTextLabel" parent="Ink" unique_id=883589103]
+[node name="StorySoFar" type="RichTextLabel" parent="InkyStory" unique_id=883589103]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(100, 100)
@@ -62,7 +76,7 @@ bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
 
-[node name="ChoicePanel" type="Panel" parent="Ink" unique_id=711204633]
+[node name="ChoicePanel" type="Panel" parent="InkyStory" unique_id=711204633]
 custom_minimum_size = Vector2(190, 210)
 layout_mode = 0
 offset_left = 770.0
@@ -72,16 +86,15 @@ offset_bottom = 756.0
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="ChoiceContainer" type="VBoxContainer" parent="Ink/ChoicePanel" unique_id=1848148210]
+[node name="ChoiceContainer" type="VBoxContainer" parent="InkyStory/ChoicePanel" unique_id=1848148210]
 unique_name_in_owner = true
 layout_mode = 0
 offset_right = 190.0
 offset_bottom = 210.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-script = ExtResource("4_272bh")
 
-[node name="TLTextPanel" type="Panel" parent="Ink" unique_id=1086979202]
+[node name="TLTextPanel" type="Panel" parent="InkyStory" unique_id=1086979202]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -90,12 +103,12 @@ offset_top = 53.0
 offset_right = 924.0
 offset_bottom = 488.0
 
-[node name="TLTextContainer" type="VBoxContainer" parent="Ink/TLTextPanel" unique_id=675665395]
+[node name="TLTextContainer" type="VBoxContainer" parent="InkyStory/TLTextPanel" unique_id=675665395]
 layout_mode = 0
 offset_right = 400.0
 offset_bottom = 435.0
 
-[node name="TimeLineText" type="RichTextLabel" parent="Ink/TLTextPanel/TLTextContainer" unique_id=745737525]
+[node name="TimeLineText" type="RichTextLabel" parent="InkyStory/TLTextPanel/TLTextContainer" unique_id=745737525]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
@@ -104,12 +117,12 @@ bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
 
-[node name="CloseTLTextPanel" type="Button" parent="Ink/TLTextPanel/TLTextContainer" unique_id=1912987259 groups=["menu_buttons"]]
+[node name="CloseTLTextPanel" type="Button" parent="InkyStory/TLTextPanel/TLTextContainer" unique_id=1912987259 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "close"
 
-[node name="TLChoicePanel" type="Panel" parent="Ink" unique_id=1556868842]
+[node name="TLChoicePanel" type="Panel" parent="InkyStory" unique_id=1556868842]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
@@ -119,7 +132,7 @@ offset_right = 1167.0
 offset_bottom = 505.0
 size_flags_vertical = 3
 
-[node name="TLChoiceContainer" type="VBoxContainer" parent="Ink/TLChoicePanel" unique_id=1760597362]
+[node name="TLChoiceContainer" type="VBoxContainer" parent="InkyStory/TLChoicePanel" unique_id=1760597362]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
@@ -128,13 +141,13 @@ offset_bottom = 486.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Ink/TLChoicePanel/TLChoiceContainer" unique_id=1045418963]
+[node name="RichTextLabel" type="RichTextLabel" parent="InkyStory/TLChoicePanel/TLChoiceContainer" unique_id=1045418963]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 text = "Select a Section"
 horizontal_alignment = 1
 
-[node name="MCPanel" type="Panel" parent="Ink" unique_id=339725949]
+[node name="MCPanel" type="Panel" parent="InkyStory" unique_id=339725949]
 layout_mode = 0
 offset_left = 987.0
 offset_top = 557.0
@@ -142,70 +155,68 @@ offset_right = 1177.0
 offset_bottom = 767.0
 size_flags_vertical = 3
 
-[node name="MenuContainer" type="VBoxContainer" parent="Ink/MCPanel" unique_id=55435968]
+[node name="MenuContainer" type="VBoxContainer" parent="InkyStory/MCPanel" unique_id=55435968]
 layout_mode = 0
 offset_right = 190.0
 offset_bottom = 210.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ShowTL" type="Button" parent="Ink/MCPanel/MenuContainer" unique_id=312946587 groups=["menu_buttons"]]
+[node name="ShowTL" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=312946587 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Show Time Line"
 script = ExtResource("4_1bvp3")
 metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
-[node name="ShowSSF" type="Button" parent="Ink/MCPanel/MenuContainer" unique_id=1705415393 groups=["menu_buttons"]]
+[node name="ShowSSF" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=1705415393 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Show Story So Far"
 script = ExtResource("4_1bvp3")
 metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
-[node name="ResetButton" type="Button" parent="Ink/MCPanel/MenuContainer" unique_id=1636853273 groups=["menu_buttons"]]
+[node name="ResetButton" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=1636853273 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "reset"
 script = ExtResource("4_1bvp3")
 metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
-[node name="MuteMusic" type="CheckButton" parent="Ink/MCPanel/MenuContainer" unique_id=771877000 groups=["menu_buttons"]]
+[node name="MuteMusic" type="CheckButton" parent="InkyStory/MCPanel/MenuContainer" unique_id=771877000 groups=["menu_buttons"]]
 layout_mode = 2
 text = "mute music"
 
-[node name="MuteSFX" type="CheckButton" parent="Ink/MCPanel/MenuContainer" unique_id=445091133 groups=["menu_buttons"]]
+[node name="MuteSFX" type="CheckButton" parent="InkyStory/MCPanel/MenuContainer" unique_id=445091133 groups=["menu_buttons"]]
 layout_mode = 2
 text = "mute sfx"
 
-[node name="Save" type="Button" parent="Ink/MCPanel/MenuContainer" unique_id=1257681161 groups=["menu_buttons"]]
+[node name="Save" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=1257681161 groups=["menu_buttons"]]
 layout_mode = 2
 text = "Save"
 
-[node name="Load" type="Button" parent="Ink/MCPanel/MenuContainer" unique_id=688421892 groups=["menu_buttons"]]
+[node name="Load" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=688421892 groups=["menu_buttons"]]
 layout_mode = 2
 text = "Load"
 
-[node name="BgMusic" type="AudioStreamPlayer2D" parent="Ink" unique_id=2105300051]
+[node name="BgMusic" type="AudioStreamPlayer2D" parent="InkyStory" unique_id=2105300051]
 unique_name_in_owner = true
 bus = &"Music"
 
-[node name="Click" type="AudioStreamPlayer2D" parent="Ink" unique_id=650924603]
+[node name="Click" type="AudioStreamPlayer2D" parent="InkyStory" unique_id=650924603]
 unique_name_in_owner = true
 stream = ExtResource("5_lquwl")
 volume_db = 1.0
 bus = &"SFX"
 
-[node name="FadeMusic" type="AudioStreamPlayer2D" parent="Ink" unique_id=994359074]
+[node name="FadeMusic" type="AudioStreamPlayer2D" parent="InkyStory" unique_id=994359074]
 unique_name_in_owner = true
 stream = ExtResource("6_7mycd")
 bus = &"Music"
 
-[connection signal="pressed" from="Ink/TLTextPanel/TLTextContainer/CloseTLTextPanel" to="Ink" method="_on_close_tl_pressed"]
-[connection signal="pressed" from="Ink/MCPanel/MenuContainer/ShowTL" to="Ink" method="_on_show_tl_pressed"]
-[connection signal="pressed" from="Ink/MCPanel/MenuContainer/ShowSSF" to="Ink" method="_on_show_ssf_pressed"]
-[connection signal="pressed" from="Ink/MCPanel/MenuContainer/ResetButton" to="Ink" method="_on_reset_button_pressed"]
-[connection signal="pressed" from="Ink/MCPanel/MenuContainer/MuteMusic" to="Ink" method="mute_music"]
-[connection signal="pressed" from="Ink/MCPanel/MenuContainer/MuteSFX" to="Ink" method="mute_sfx"]
-[connection signal="pressed" from="Ink/MCPanel/MenuContainer/Save" to="Ink" method="_on_save_pressed"]
-[connection signal="pressed" from="Ink/MCPanel/MenuContainer/Load" to="Ink" method="_on_load_pressed"]
+[connection signal="pressed" from="InkyStory/TLTextPanel/TLTextContainer/CloseTLTextPanel" to="InkyStory/TextManager" method="_on_close_tl_pressed"]
+[connection signal="button_up" from="InkyStory/MCPanel/MenuContainer/ShowTL" to="InkyStory/TextManager" method="_on_show_tl_pressed"]
+[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/ShowSSF" to="InkyStory/TextManager" method="_on_show_ssf_pressed"]
+[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/ResetButton" to="InkyStory/TextManager" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/MuteMusic" to="InkyStory/TextManager" method="mute_music"]
+[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/MuteSFX" to="InkyStory/TextManager" method="mute_sfx"]
