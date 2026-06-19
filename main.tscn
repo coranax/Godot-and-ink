@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://d118s5e01ss6h"]
 
 [ext_resource type="Theme" uid="uid://dobwjtu50e46r" path="res://art/main_theme.tres" id="1_1bvp3"]
+[ext_resource type="Script" uid="uid://cwbitckeemng0" path="res://scripts/ink_manager.gd" id="2_5vw27"]
 [ext_resource type="Texture2D" uid="uid://qii8nig507mn" path="res://art/chinatown at night.jpg" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://c0bah1eknsah0" path="res://scripts/text_manager.gd" id="3_1bvp3"]
-[ext_resource type="Script" uid="uid://3rq4jwkvupp7" path="res://sound_manager.gd" id="3_5vw27"]
+[ext_resource type="Script" uid="uid://3rq4jwkvupp7" path="res://scripts/audio_manager.gd" id="3_5vw27"]
 [ext_resource type="Script" uid="uid://dn3p7f8tpmhnf" path="res://scripts/choice_button.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://dh82n8i34kx66" path="res://scripts/button_manager.gd" id="4_kek77"]
 [ext_resource type="AudioStream" uid="uid://b60djvjxyn2yy" path="res://sfx/click.wav" id="5_lquwl"]
 [ext_resource type="AudioStream" uid="uid://cl6prss0gbfit" path="res://audio_stream_interactive.tres" id="6_7mycd"]
-[ext_resource type="PackedScene" uid="uid://b8c7miaxbwj0k" path="res://scenes/ink_manager.tscn" id="7_272bh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
 
@@ -18,19 +19,21 @@ layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_1bvp3")
 
+[node name="InkManager" type="Node" parent="InkyStory" unique_id=705309627]
+unique_name_in_owner = true
+script = ExtResource("2_5vw27")
+
 [node name="TextManager" type="Node" parent="InkyStory" unique_id=1443141056]
 unique_name_in_owner = true
 script = ExtResource("3_1bvp3")
 
 [node name="ButtonManager" type="Node" parent="InkyStory" unique_id=1994455832]
 unique_name_in_owner = true
+script = ExtResource("4_kek77")
 
-[node name="SoundManager" type="Node" parent="InkyStory" unique_id=1426242386]
+[node name="AudioManager" type="Node" parent="InkyStory" unique_id=1426242386]
 unique_name_in_owner = true
 script = ExtResource("3_5vw27")
-
-[node name="InkManager" parent="InkyStory" unique_id=1233377924 instance=ExtResource("7_272bh")]
-unique_name_in_owner = true
 
 [node name="BgImage" type="TextureRect" parent="InkyStory" unique_id=2023718796]
 unique_name_in_owner = true
@@ -184,10 +187,12 @@ script = ExtResource("4_1bvp3")
 metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
 [node name="MuteMusic" type="CheckButton" parent="InkyStory/MCPanel/MenuContainer" unique_id=771877000 groups=["menu_buttons"]]
+unique_name_in_owner = true
 layout_mode = 2
 text = "mute music"
 
 [node name="MuteSFX" type="CheckButton" parent="InkyStory/MCPanel/MenuContainer" unique_id=445091133 groups=["menu_buttons"]]
+unique_name_in_owner = true
 layout_mode = 2
 text = "mute sfx"
 
@@ -198,10 +203,6 @@ text = "Save"
 [node name="Load" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=688421892 groups=["menu_buttons"]]
 layout_mode = 2
 text = "Load"
-
-[node name="BgMusic" type="AudioStreamPlayer2D" parent="InkyStory" unique_id=2105300051]
-unique_name_in_owner = true
-bus = &"Music"
 
 [node name="Click" type="AudioStreamPlayer2D" parent="InkyStory" unique_id=650924603]
 unique_name_in_owner = true
@@ -214,9 +215,11 @@ unique_name_in_owner = true
 stream = ExtResource("6_7mycd")
 bus = &"Music"
 
-[connection signal="pressed" from="InkyStory/TLTextPanel/TLTextContainer/CloseTLTextPanel" to="InkyStory/TextManager" method="_on_close_tl_pressed"]
-[connection signal="button_up" from="InkyStory/MCPanel/MenuContainer/ShowTL" to="InkyStory/TextManager" method="_on_show_tl_pressed"]
-[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/ShowSSF" to="InkyStory/TextManager" method="_on_show_ssf_pressed"]
-[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/ResetButton" to="InkyStory/TextManager" method="_on_reset_button_pressed"]
-[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/MuteMusic" to="InkyStory/TextManager" method="mute_music"]
-[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/MuteSFX" to="InkyStory/TextManager" method="mute_sfx"]
+[connection signal="pressed" from="InkyStory/TLTextPanel/TLTextContainer/CloseTLTextPanel" to="InkyStory/ButtonManager" method="_on_close_tl_pressed"]
+[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/ShowTL" to="InkyStory/ButtonManager" method="_on_show_tl_pressed"]
+[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/ShowSSF" to="InkyStory/ButtonManager" method="_on_show_ssf_pressed"]
+[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/ResetButton" to="InkyStory/ButtonManager" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/MuteMusic" to="InkyStory/ButtonManager" method="_on_mute_music_pressed"]
+[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/MuteSFX" to="InkyStory/ButtonManager" method="_on_mute_sfx_pressed"]
+[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/Save" to="InkyStory/ButtonManager" method="_on_save_pressed"]
+[connection signal="pressed" from="InkyStory/MCPanel/MenuContainer/Load" to="InkyStory/ButtonManager" method="_on_load_pressed"]

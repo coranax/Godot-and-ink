@@ -10,8 +10,7 @@
     // can be used at top of knot or stitch:
         // setting: to change setting text label
         // image: changes the background image
-        // music: changes music track
-        // oldsound: i should get rid of this
+        // music: changes music track, numerical, coincides w/ clips in game engine
     
     // must be used before **FIRST** choice in stitch:
         // title: for progress dictionary and timeline
@@ -41,7 +40,7 @@ VAR current_loc = no_loc
 
 === index ===
 ~ current_loc = no_loc
-# setting: index # image: chinatown at night.jpg # oldsound: kinda-chill.wav # music: 0
+# setting: index # image: chinatown at night.jpg # music: 0
 
 This  is the title :) hohoho { current_loc }
 + [go to chapter 1] -> ch1
@@ -53,7 +52,7 @@ This  is the title :) hohoho { current_loc }
 
 === ch1 ===
 ~ current_loc = no_loc
-# oldsound: sad-song.wav # setting: chapter 1 # image: ocean city new jersey.jpg  # music: 1
+# setting: chapter 1 # image: ocean city new jersey.jpg  # music: 1
 Chapter 1
 + [start ch1] -> one
 
@@ -133,7 +132,7 @@ End of Chapter
 
 === ch2 ===
 ~ current_loc = no_loc
-# setting: chapter 2 # image: philadelphia skyline.jpg # oldsound: weird-song.wav  # music: 2
+# setting: chapter 2 # image: philadelphia skyline.jpg  # music: 2
 Chapter 2
 + [start ch2] -> one
 
@@ -195,7 +194,7 @@ End of Chapter
 
 === ch3 ===
 ~ current_loc = no_loc
-# setting: chapter 3 # image: pittsburg 3 point park.jpg # oldsound: crazy-song.wav  # music: 3
+# setting: chapter 3 # image: pittsburg 3 point park.jpg # music: 3
 Chapter 3
 + [start ch3] -> one
 

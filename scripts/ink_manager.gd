@@ -5,7 +5,8 @@ class_name InkManager extends Node
 var NewInkPlayer = load("res://addons/inkgd/ink_player.gd")
 @onready var _ink_player = NewInkPlayer.new()
 
-@onready var text_manager = %TextManager
+@onready var text_mgr = %TextManager
+@onready var button_mgr = %ButtonManager
 
 # Replace the path with the path to your story. UNIQUE
 var i_file: String = "res://story/testing.ink.json"
@@ -61,30 +62,30 @@ func _continue_story():
 		# the br is here in BBC code to add extra white space after each paragraph/line break
 		story_text += _ink_player.continue_story() + "[br]"
 		
-		text_manager.set_text_box(story_text)
+		text_mgr.set_text_box(story_text)
 		
 		cont_tag_array = _ink_player.current_tags 
 		
-		text_manager.build_setting(cont_tag_array) # gathers the tags and uses them to apply the appropriate settings
-		text_manager.build_prog_array(cont_tag_array) # progress array tracks the "finish" tag UNIQUE
+		text_mgr.build_setting(cont_tag_array) # gathers the tags and uses them to apply the appropriate settings
+		text_mgr.build_prog_array(cont_tag_array) # progress array tracks the "finish" tag UNIQUE
 		
 	if _ink_player.has_choices:
 		has_choices = true
 		is_finished = false
 		
 		story_so_far += story_text
-		text_manager.set_ssf(story_so_far)
+		text_mgr.set_ssf(story_so_far)
 		
 		# this needs to stay under the choices clause, and take the tags that are available at the time of the choice
-		text_manager.build_prog_dict(_ink_player.current_tags)
+		text_mgr.build_prog_dict(_ink_player.current_tags)
 		
 		# 'current_choices' contains a list of the choices, as strings.
 		choice_array = _ink_player.current_choices
 		
-		text_manager.clear_choice_buttons()
+		button_mgr.clear_choice_buttons()
 		var choice_index: int = 0 # this will increment in order to assign the button to the correct choice index
 		for choice in choice_array: 
-			text_manager.build_choice_buttons(choice, choice_index)
+			button_mgr.build_choice_buttons(choice, choice_index)
 			choice_index += 1
 		
 	else: # This code runs when the story reaches it's end.
@@ -92,10 +93,10 @@ func _continue_story():
 		can_continue = false
 		has_choices = false
 		
-		text_manager.clear_choice_buttons()
+		button_mgr.clear_choice_buttons()
 		print("The End")
-		print(text_manager.prog_array)
-		print(text_manager.prog_dict)
+		#print(text_manager.prog_array)
+		#print(text_manager.prog_dict)
 
 
 # '_select_choice' is a function that will take the index of your selection and continue the story.
@@ -110,7 +111,7 @@ func _observe_variables():
 func _variable_changed(variable_name, new_value):
 	if var_array.has(variable_name):
 		changed_var_dict[variable_name] = new_value
-		print("Variable '%s' changed to: %s" %[variable_name, new_value])
+		#print("Variable '%s' changed to: %s" %[variable_name, new_value])
 
 func reset() -> void:
 	story_so_far = ""
