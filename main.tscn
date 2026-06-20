@@ -7,7 +7,8 @@
 [ext_resource type="Script" uid="uid://3rq4jwkvupp7" path="res://scripts/audio_manager.gd" id="3_5vw27"]
 [ext_resource type="Script" uid="uid://dh82n8i34kx66" path="res://scripts/button_manager.gd" id="4_kek77"]
 [ext_resource type="AudioStream" uid="uid://b60djvjxyn2yy" path="res://sfx/click.wav" id="5_lquwl"]
-[ext_resource type="AudioStream" uid="uid://cl6prss0gbfit" path="res://audio_stream_interactive.tres" id="6_7mycd"]
+[ext_resource type="AudioStream" uid="uid://cl6prss0gbfit" path="res://music/audio_stream_interactive.tres" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://cchmp4swowos2" path="res://saver_loader.gd" id="6_kek77"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
 
@@ -33,6 +34,10 @@ script = ExtResource("4_kek77")
 [node name="AudioManager" type="Node" parent="InkyStory" unique_id=1426242386]
 unique_name_in_owner = true
 script = ExtResource("3_5vw27")
+
+[node name="SaverLoader" type="Node" parent="InkyStory" unique_id=212882722]
+unique_name_in_owner = true
+script = ExtResource("6_kek77")
 
 [node name="BgImage" type="TextureRect" parent="InkyStory" unique_id=2023718796]
 unique_name_in_owner = true

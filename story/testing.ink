@@ -58,25 +58,30 @@ Chapter 1
 
 = one
 ~ current_loc = ch0101
+# setting: SAVE HERE ;)
 This is chapter 1 part one.... page 1
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
 
 # title: chapter 1-1 # id: 0101
-+ [next]
++ [nextch0101.1]
++ [next2ch0101.1]
++ [next3ch0101.1]
 
 - This is chapter 1 part one.... page 2
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
 
-+ [next]
++ [nextch0101.2]
++ [next2ch0101.2]
++ [next3ch0101.2]
 
 - This is chapter 1 part one.... page 3
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
 
 # finish: 0101
-+ [next]
++ [nextch0101.3]
 
 -> two
 

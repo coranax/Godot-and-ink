@@ -15,6 +15,10 @@ run/main_scene="uid://d118s5e01ss6h"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://music/default_bus_layout.tres"
+
 [autoload]
 
 __InkRuntime="*uid://cgy2h20a8ho5g"
@@ -44,3 +48,4 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)

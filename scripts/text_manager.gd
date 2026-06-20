@@ -15,15 +15,20 @@ extends Node
 
 @onready var time_line_text: RichTextLabel = %TimeLineText
 
-# record the players progress in various ways
-var story_so_far: String = "" # this is mainly just for display text
-var prog_array: Array = []
+# saves the settings so they can be recalled when a save game is loaded UNIQUE
+var sett_dict: Dictionary = {
+	"setting" = "",
+	"image" = "",
+	"music" = ""
+}
 
-# for the timeline text. these need to be public as they are built at different times.
-var prog_dict: Dictionary
+# record the players progress in various ways
+var prog_array: Array = []
+var prog_dict: Dictionary = {}
+# for the dict
 var ch_id: int = 0
 var ch_title: String = ""
-var ch_body: String
+var ch_body: String = ""
 
 # list of location arrays taken from ink UNIQUE
 var loc_list: Array = ["ch0101", "ch0102", "ch0103", "ch0201", "ch0202", "ch0203", "ch0301", "ch0302", "ch0303"]
@@ -60,7 +65,7 @@ func set_text_box(text: String)-> void:
 	tween.tween_property(text_box, "theme_override_colors/default_color", Color(1,1,1,1), 0.5)
 
 # sets the story so far label
-func set_ssf(text: String)-> void:
+func set_ssf_label(text: String)-> void:
 	ssf_label.set_text(text)
 
 # sets the setting (title of sub section... probably needs a rename) label
@@ -119,10 +124,13 @@ func get_tag_slice(tags: Array, item: String) -> String:
 func build_setting(tags: Array) -> void:
 	if is_tag_listed(tags, "setting"):
 		set_setting_label(get_tag_slice(tags, "setting"))
+		sett_dict["setting"] = get_tag_slice(tags, "setting")
 	if is_tag_listed(tags, "image"):
 		set_bg_image(get_tag_slice(tags, "image"))
+		sett_dict["image"] = get_tag_slice(tags, "image")
 	if is_tag_listed(tags, "music"):
 		audio_mgr.change_song(int(get_tag_slice(tags, "music")))
+		sett_dict["music"] = get_tag_slice(tags, "music")
 
 # makes the background image fade out then fade in with the new one.
 func set_bg_image(file: String) -> void:
@@ -145,8 +153,7 @@ func build_prog_array(tags: Array):
 		if !prog_array.has(get_tag_slice(tags,"finish")): # make sure this section is not already included
 			prog_array.append(get_tag_slice(tags, "finish"))
 			prog_array.sort()
-			button_mgr._on_show_tl_pressed() # calling this twice forces the buttons to clear and reset based on the new sort
-			button_mgr._on_show_tl_pressed() # is this sloppy? maybe!
+			button_mgr.refresh_tl_buttons(prog_array)
 
 # this is called when there are choices since that is where the finish tag is. UNIQUE
 func build_prog_dict(tags: Array) -> void:
@@ -169,3 +176,57 @@ func build_prog_dict(tags: Array) -> void:
 			}
 		prog_dict.set(ch_id, new_prog)
 		ch_body = ""
+
+
+# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
+# Saving and Loading
+# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
+# these functions are strictly game engine side, and will need to work in tandem with saving and loading the ink file
+
+# gathers the current settings and progress and stores in a dictionary
+func save_text_prog() -> Dictionary:
+	print("# -----* SAVING prog/text/etc")
+	var state_dict: Dictionary = {
+		"settings" = {},
+		"prog_array" = [],
+		"proc_dict" = {}
+	}
+	
+	# important to DUPLICATE arrays and dictionaries. deep = true because some are nested
+	state_dict["settings"] = sett_dict.duplicate(true)
+	state_dict["prog_array"] = prog_array.duplicate(true)
+	state_dict["proc_dict"] = prog_dict.duplicate(true)
+	
+	return state_dict
+
+# sets the settings and progress from a given dictionary (hopefully the one from when you saved) ;)
+func load_text_prog(old_state: Dictionary) -> void:
+	print("# -----* LOADING prog/text/etc")
+	
+	# reapply settings
+	sett_dict = old_state["settings"].duplicate(true)
+	set_setting_label(sett_dict["setting"])
+	set_bg_image(sett_dict["image"])
+	audio_mgr.change_song(int(sett_dict["music"]))
+	
+	# reapply progress array. buttons need refreshed
+	prog_array = old_state["prog_array"].duplicate(true)
+	button_mgr.refresh_tl_buttons(prog_array)
+	
+	# reapply progress dictionary
+	prog_dict = old_state["proc_dict"].duplicate(true)
+
+
+# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
+# Reset
+# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
+
+# reset the settings and progress trackers
+func reset_progress() -> void:
+	prog_array = []
+	prog_dict = {}
+	sett_dict= {
+		"setting" = "",
+		"image" = "",
+		"music" = ""
+	}

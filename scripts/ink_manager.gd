@@ -11,10 +11,11 @@ var NewInkPlayer = load("res://addons/inkgd/ink_player.gd")
 
 # Replace the path with the path to your story. UNIQUE
 var i_file: String = "res://story/testing.ink.json"
+var s_file: String = "res://story/saves/save.save"
 
 # some bools. i don't think these are strictly needed but they might be helpful in state management
 @export var is_loaded: bool = false
-@export var can_continue: bool = false
+@export var can_story_continue: bool = false
 @export var has_choices: bool = false
 @export var is_finished: bool = false
 
@@ -68,7 +69,7 @@ func continue_story() -> void:
 func _continue_story():
 	story_text = ""
 	while _ink_player.can_continue:
-		can_continue = true
+		can_story_continue = true
 		
 		# += is important else it will just show last line from ink
 		# the br is here in BBC code to add extra white space after each paragraph/line break
@@ -85,7 +86,7 @@ func _continue_story():
 		is_finished = false
 		
 		story_so_far += story_text
-		text_mgr.set_ssf(story_so_far)
+		text_mgr.set_ssf_label(story_so_far)
 		
 		# this needs to stay under the choices clause, and take the tags that are available at the time of the choice
 		text_mgr.build_prog_dict(_ink_player.current_tags)
@@ -101,7 +102,7 @@ func _continue_story():
 		
 	else: # This code runs when the story reaches it's end.
 		is_finished = true
-		can_continue = false
+		can_story_continue = false
 		has_choices = false
 		
 		button_mgr.clear_choice_buttons()
@@ -122,7 +123,7 @@ func _observe_variables():
 func _variable_changed(variable_name, new_value):
 	if var_array.has(variable_name):
 		changed_var_dict[variable_name] = new_value
-		#print("Variable '%s' changed to: %s" %[variable_name, new_value])
+		print("Variable '%s' changed to: %s" %[variable_name, new_value])
 
 # reset the story
 func reset() -> void:
@@ -130,7 +131,27 @@ func reset() -> void:
 	_ink_player.reset()
 	_continue_story()
 
+# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
+# Saving and Loading the ink (what about my settings?) TODO
+# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
+var ssf = ""
+var ct = ""
+
+func save_ink() -> void:
+	print("# -----* SAVING ink")
+	_ink_player.save_state_to_path(s_file)
+	ssf = story_so_far
+	ct = story_text
+
+
+func load_ink() -> void:
+	print("# -----* LOADING ink")
+	story_so_far = ""
+	_ink_player.load_state_from_path(s_file)
+	story_so_far = ssf
+	story_text = ct
+	_continue_story()
 
 
 

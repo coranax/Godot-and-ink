@@ -1,0 +1,9 @@
+set_text_box
+set_ssf_label
+
+
+need to figure how to reset ssf
+
+current_loc?
+
+is it ok if it's not updated since it's just for progress?

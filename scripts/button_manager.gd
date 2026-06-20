@@ -71,6 +71,10 @@ func clear_tl_buttons() -> void:
 	for button in get_tree().get_nodes_in_group("time_line_buttons"):
 		button.queue_free()
 
+func refresh_tl_buttons(prog: Array) -> void:
+	clear_tl_buttons()
+	build_tl_buttons(prog)
+
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 # On Pressed Buttons
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
@@ -103,8 +107,7 @@ func _on_show_time_line_text(id: String) -> void:
 
 # clear and reset the story
 func _on_reset_button_pressed() -> void:
-	text_mgr.set_ssf("")
-	text_mgr.prog_array = []
+	text_mgr.reset_progress()
 	
 	clear_choice_buttons()
 	clear_tl_buttons()
@@ -145,9 +148,16 @@ func _on_mute_music_pressed() -> void:
 func _on_mute_sfx_pressed() -> void:
 	audio_mgr.mute_sfx()
 
+# -----* Saving and Loading
+
 #TODO >_>
+var dict = {} # this is just for testing
 func _on_save_pressed() -> void:
-	pass # Replace with function body.
+	print("# -----* SAVING BUTTON PRESSED :)")
+	ink_mgr.save_ink()
+	dict = text_mgr.save_text_prog()
 
 func _on_load_pressed() -> void:
-	pass # Replace with function body.
+	print("# -----* LOADING BUTTON PRESSED :)")
+	text_mgr.load_text_prog(dict)
+	ink_mgr.load_ink()
