@@ -1,9 +1,6 @@
 extends Node
 # this manager handles text, graphics, and UI elements
 
-
-var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
-
 # other management
 @onready var ink_mgr = %InkManager
 @onready var button_mgr = %ButtonManager
@@ -11,21 +8,12 @@ var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 
 # my variables uwu
 @onready var bg_image: TextureRect = %BgImage
-@onready var setting: RichTextLabel = %Setting
+@onready var setting_label: RichTextLabel = %Setting
 
 @onready var text_box: RichTextLabel = %TextBox
 @onready var ssf_label: RichTextLabel = %StorySoFar
 
-@onready var choice_container: VBoxContainer = %ChoiceContainer
-
-@onready var time_line_text_panel: Panel = %TLTextPanel
 @onready var time_line_text: RichTextLabel = %TimeLineText
-
-@onready var time_line_choice_panel = %TLChoicePanel
-@onready var time_line_choice_container = %TLChoiceContainer
-
-@onready var fade_music: AudioStreamPlayer2D = %FadeMusic
-# waow that's a lot. 
 
 # record the players progress in various ways
 var story_so_far: String = "" # this is mainly just for display text
@@ -48,35 +36,44 @@ const bgi_path: String = "res://art/"
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
 func _ready():
-	ink_mgr.var_array = ["current_loc"]
+	ink_mgr.var_array = ["current_loc"] # what variables the ink manager should watch for UNIQUE
 	
 	# get the story so far scrolling situated
 	ssf_label.set_scroll_follow(true)
 	ssf_label.visible = false
-	time_line_text_panel.visible = false
-	time_line_choice_panel.visible = false
 	
-	# you have to start the player or else the program will be very angry with you
-	var music_tween = get_tree().create_tween()
-	fade_music.play()
-	fade_music.volume_db = -30
-	music_tween.tween_property(fade_music, "volume_db", 1, 3)
-	
-	# make sure menu buttons make a click sound. UNIQUE
-	for mb in get_tree().get_nodes_in_group("menu_buttons"):
-		mb.pressed.connect(audio_mgr.play_click.bind())
+	# set these things transparent to start so the tweens will feel smoother
+	text_box.set("theme_override_colors/default_color", Color(1,1,1,0))
+	setting_label.set("theme_override_colors/default_color", Color(1,1,1,0))
+	bg_image.set("self_modulate", Color(1,1,1,0))
 
 
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
-# Story and ink stuff
+# Text Boxes
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
+# sets the main story text box. text will fade in, if the user button mashes it will break the effct but so it goes
 func set_text_box(text: String)-> void:
+	text_box.set("theme_override_colors/default_color", Color(1,1,1,0))
+	var tween = get_tree().create_tween()
 	text_box.set_text(text)
+	tween.tween_property(text_box, "theme_override_colors/default_color", Color(1,1,1,1), 0.5)
 
+# sets the story so far label
 func set_ssf(text: String)-> void:
 	ssf_label.set_text(text)
 
+# sets the setting (title of sub section... probably needs a rename) label
+func set_setting_label(text: String) -> void:
+	setting_label.set("theme_override_colors/default_color", Color(1,1,1,0))
+	var tween = get_tree().create_tween()
+	setting_label.set_text(text)
+	tween.tween_property(setting_label, "theme_override_colors/default_color", Color(1,1,1,1), 0.5)
+
+
+# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
+# Tag Checkers
+# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
 # this works hand in hand with the next one. would have liked to do it in one but i'm only so brave
 func is_tag_listed(tags: Array, item: String) -> bool:
@@ -114,35 +111,35 @@ func get_tag_slice(tags: Array, item: String) -> String:
 	return slice
 
 
-
-
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
-# Game Settings and Progress
+# Game Settings
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-# these are the game elements that will change based on the "setting" (ink tags) of the story
+# these are the game elements that will change based on the "setting" (ink tags) of the story UNIQUE
 func build_setting(tags: Array) -> void:
-	# remember to change bgi_path and bgm_path if needed
-	
-	# storing the tags in a dict UNIQUE (names of settings)
-	var setting_dict: Dictionary = { 
-		"setting" = "",
-		"image" = "",
-		"music" = ""
-	} # why does this exist?
-	
 	if is_tag_listed(tags, "setting"):
-		setting_dict["setting"] = get_tag_slice(tags, "setting")
-		setting.set_text(setting_dict["setting"])
+		set_setting_label(get_tag_slice(tags, "setting"))
 	if is_tag_listed(tags, "image"):
-		setting_dict["image"] = get_tag_slice(tags, "image")
-		bg_image.texture = load(bgi_path + setting_dict["image"])
+		set_bg_image(get_tag_slice(tags, "image"))
 	if is_tag_listed(tags, "music"):
-		setting_dict["music"] = get_tag_slice(tags, "music")		
-		var new_song = int(setting_dict["music"])
-		audio_mgr.change_song(new_song)
+		audio_mgr.change_song(int(get_tag_slice(tags, "music")))
 
-# stores the player's progress in an array. "finish". UNIQUE
+# makes the background image fade out then fade in with the new one.
+func set_bg_image(file: String) -> void:
+	# remember to change bgi_path (above) if needed
+	var tween_out = get_tree().create_tween()
+	await tween_out.tween_property(bg_image, "self_modulate", Color(1,1,1,0), .5).finished
+	# i could probably figure out cross fade but it feels not worth it. i don't hate this.
+	var tween_in = get_tree().create_tween()
+	bg_image.texture = load(bgi_path + file)
+	tween_in.tween_property(bg_image, "self_modulate", Color(1,1,1,1), 1)
+
+
+# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
+# Progress
+# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
+
+# stores the player's progress in an array when it hits "finish" UNIQUE
 func build_prog_array(tags: Array):
 	if is_tag_listed(tags, "finish"):
 		if !prog_array.has(get_tag_slice(tags,"finish")): # make sure this section is not already included
@@ -172,16 +169,3 @@ func build_prog_dict(tags: Array) -> void:
 			}
 		prog_dict.set(ch_id, new_prog)
 		ch_body = ""
-
-# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
-# Sound (these could also fit with BUTTONS but alas)
-# -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
-
-# this will play the next song and loop through all the clips (i don't need this lol)
-func advance_music() -> void:
-	var i = fade_music.get_stream_playback().get_current_clip_index()
-	if i < 3:
-		i += 1
-	else:
-		i = 0
-	fade_music.get_stream_playback().switch_to_clip(i)

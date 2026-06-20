@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://qii8nig507mn" path="res://art/chinatown at night.jpg" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://c0bah1eknsah0" path="res://scripts/text_manager.gd" id="3_1bvp3"]
 [ext_resource type="Script" uid="uid://3rq4jwkvupp7" path="res://scripts/audio_manager.gd" id="3_5vw27"]
-[ext_resource type="Script" uid="uid://dn3p7f8tpmhnf" path="res://scripts/choice_button.gd" id="4_1bvp3"]
 [ext_resource type="Script" uid="uid://dh82n8i34kx66" path="res://scripts/button_manager.gd" id="4_kek77"]
 [ext_resource type="AudioStream" uid="uid://b60djvjxyn2yy" path="res://sfx/click.wav" id="5_lquwl"]
 [ext_resource type="AudioStream" uid="uid://cl6prss0gbfit" path="res://audio_stream_interactive.tres" id="6_7mycd"]
@@ -68,7 +67,6 @@ autowrap_mode = 2
 
 [node name="StorySoFar" type="RichTextLabel" parent="InkyStory" unique_id=883589103]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 0
 offset_left = 39.0
@@ -99,7 +97,6 @@ size_flags_vertical = 4
 
 [node name="TLTextPanel" type="Panel" parent="InkyStory" unique_id=1086979202]
 unique_name_in_owner = true
-visible = false
 layout_mode = 0
 offset_left = 524.0
 offset_top = 53.0
@@ -127,7 +124,6 @@ text = "close"
 
 [node name="TLChoicePanel" type="Panel" parent="InkyStory" unique_id=1556868842]
 unique_name_in_owner = true
-visible = false
 layout_mode = 0
 offset_left = 939.0
 offset_top = 19.0
@@ -152,39 +148,33 @@ horizontal_alignment = 1
 
 [node name="MCPanel" type="Panel" parent="InkyStory" unique_id=339725949]
 layout_mode = 0
-offset_left = 987.0
-offset_top = 557.0
-offset_right = 1177.0
-offset_bottom = 767.0
+offset_left = 983.0
+offset_top = 532.0
+offset_right = 1173.0
+offset_bottom = 782.0
 size_flags_vertical = 3
 
 [node name="MenuContainer" type="VBoxContainer" parent="InkyStory/MCPanel" unique_id=55435968]
 layout_mode = 0
 offset_right = 190.0
-offset_bottom = 210.0
+offset_bottom = 250.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ShowTL" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=312946587 groups=["menu_buttons"]]
+[node name="ShowTL" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=1053659487 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Show Time Line"
-script = ExtResource("4_1bvp3")
-metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
-[node name="ShowSSF" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=1705415393 groups=["menu_buttons"]]
+[node name="ShowSSF" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=275632506 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Show Story So Far"
-script = ExtResource("4_1bvp3")
-metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
-[node name="ResetButton" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=1636853273 groups=["menu_buttons"]]
+[node name="ResetButton" type="Button" parent="InkyStory/MCPanel/MenuContainer" unique_id=758436642 groups=["menu_buttons"]]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "reset"
-script = ExtResource("4_1bvp3")
-metadata/_custom_type_script = "uid://dn3p7f8tpmhnf"
 
 [node name="MuteMusic" type="CheckButton" parent="InkyStory/MCPanel/MenuContainer" unique_id=771877000 groups=["menu_buttons"]]
 unique_name_in_owner = true

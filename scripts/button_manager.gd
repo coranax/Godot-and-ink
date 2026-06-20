@@ -1,5 +1,7 @@
 extends Node
+# this manages buttons and other UI elements
 
+# some cute butts (choice buttons for story choices and the timeline)
 var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 
 @onready var ink_mgr = %InkManager
@@ -14,6 +16,15 @@ var ChoiceButt: PackedScene = preload("res://scenes/choice_button.tscn")
 @onready var time_line_text: RichTextLabel = %TimeLineText
 @onready var time_line_choice_panel = %TLChoicePanel
 @onready var time_line_choice_container = %TLChoiceContainer
+
+
+func _ready() -> void:
+	time_line_text_panel.visible = false
+	time_line_choice_panel.visible = false
+	
+	# make sure menu buttons make a click sound. UNIQUE
+	for mb in get_tree().get_nodes_in_group("menu_buttons"):
+		mb.pressed.connect(audio_mgr.play_click.bind())
 
 
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
@@ -64,7 +75,7 @@ func clear_tl_buttons() -> void:
 # On Pressed Buttons
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-# -----*-----* Instantiated buttons
+# -----* Instantiated buttons
 
 # a choice button has been pressed # blessed
 func _on_choice_button_press(id: int) -> void:
@@ -88,7 +99,7 @@ func _on_show_time_line_text(id: String) -> void:
 			time_line_text.set_text(text)
 			time_line_text.scroll_to_line(0)
 
-# -----*-----* Static buttons
+# -----* Static buttons
 
 # clear and reset the story
 func _on_reset_button_pressed() -> void:
