@@ -8,7 +8,16 @@
 [ext_resource type="Script" uid="uid://dh82n8i34kx66" path="res://scripts/button_manager.gd" id="4_kek77"]
 [ext_resource type="AudioStream" uid="uid://b60djvjxyn2yy" path="res://sfx/click.wav" id="5_lquwl"]
 [ext_resource type="AudioStream" uid="uid://cl6prss0gbfit" path="res://music/audio_stream_interactive.tres" id="6_7mycd"]
-[ext_resource type="Script" uid="uid://cchmp4swowos2" path="res://saver_loader.gd" id="6_kek77"]
+[ext_resource type="Script" uid="uid://cchmp4swowos2" path="res://scripts/saver_loader.gd" id="6_kek77"]
+[ext_resource type="Script" uid="uid://debda075g1ox4" path="res://other testing/text_effect.gd" id="8_4c57u"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_4c57u"]
+script = ExtResource("8_4c57u")
+metadata/_custom_type_script = "uid://debda075g1ox4"
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_efxa6"]
+script = ExtResource("8_4c57u")
+metadata/_custom_type_script = "uid://debda075g1ox4"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
 
@@ -56,7 +65,9 @@ offset_left = 16.0
 offset_top = 552.0
 offset_right = 693.0
 offset_bottom = 576.0
+bbcode_enabled = true
 text = "This is the setting ;)"
+custom_effects = [SubResource("RichTextEffect_4c57u")]
 
 [node name="TextBox" type="RichTextLabel" parent="InkyStory" unique_id=1847073007]
 unique_name_in_owner = true
@@ -69,6 +80,7 @@ offset_bottom = 766.0
 bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
+custom_effects = [SubResource("RichTextEffect_efxa6")]
 
 [node name="StorySoFar" type="RichTextLabel" parent="InkyStory" unique_id=883589103]
 unique_name_in_owner = true
@@ -81,6 +93,7 @@ offset_bottom = 542.0
 bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
+custom_effects = [SubResource("RichTextEffect_4c57u")]
 
 [node name="ChoicePanel" type="Panel" parent="InkyStory" unique_id=711204633]
 custom_minimum_size = Vector2(190, 210)
@@ -94,9 +107,12 @@ size_flags_vertical = 6
 
 [node name="ChoiceContainer" type="VBoxContainer" parent="InkyStory/ChoicePanel" unique_id=1848148210]
 unique_name_in_owner = true
-layout_mode = 0
-offset_right = 190.0
-offset_bottom = 210.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
@@ -121,6 +137,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_lquwl")
 bbcode_enabled = true
 text = "こんいちは！　Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate ut est vel congue. Quisque vestibulum enim luctus, aliquet turpis ut, pharetra elit. Duis sit amet vehicula lacus. Suspendisse potenti. Quisque mollis tincidunt est. Donec finibus sollicitudin nisl sed lobortis. Maecenas vitae tortor tempor, vestibulum tortor vel, auctor tellus. Nam at leo vel magna elementum blandit a at risus. Suspendisse sit amet lectus id urna scelerisque vulputate quis nec sem. Mauris sodales leo ac purus fermentum fringilla. Donec malesuada eget risus quis sodales. "
 autowrap_mode = 2
+custom_effects = [SubResource("RichTextEffect_4c57u")]
 
 [node name="CloseTLTextPanel" type="Button" parent="InkyStory/TLTextPanel/TLTextContainer" unique_id=1912987259 groups=["menu_buttons"]]
 layout_mode = 2
@@ -148,8 +165,10 @@ size_flags_vertical = 4
 [node name="RichTextLabel" type="RichTextLabel" parent="InkyStory/TLChoicePanel/TLChoiceContainer" unique_id=1045418963]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
+bbcode_enabled = true
 text = "Select a Section"
 horizontal_alignment = 1
+custom_effects = [SubResource("RichTextEffect_4c57u")]
 
 [node name="MCPanel" type="Panel" parent="InkyStory" unique_id=339725949]
 layout_mode = 0
@@ -161,8 +180,10 @@ size_flags_vertical = 3
 
 [node name="MenuContainer" type="VBoxContainer" parent="InkyStory/MCPanel" unique_id=55435968]
 layout_mode = 0
-offset_right = 190.0
-offset_bottom = 250.0
+offset_left = 22.0
+offset_top = 4.0
+offset_right = 168.0
+offset_bottom = 245.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 

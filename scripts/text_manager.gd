@@ -36,6 +36,10 @@ var loc_list: Array = ["ch0101", "ch0102", "ch0103", "ch0201", "ch0202", "ch0203
 # this will vary per project but it must be done. UNIQUE
 const bgi_path: String = "res://art/"
 
+# for saving the game tex and other info used here NOTE it's a json
+#var s_file: String = "res://story/saves/text.json" # for testing?
+var s_file: String = "user://text.json" # for prod?
+
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 # Ready
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
@@ -184,37 +188,62 @@ func build_prog_dict(tags: Array) -> void:
 # these functions are strictly game engine side, and will need to work in tandem with saving and loading the ink file
 
 # gathers the current settings and progress and stores in a dictionary
-func save_text_prog() -> Dictionary:
+func save_text_prog() -> void:
 	print("# -----* SAVING prog/text/etc")
+	var f = FileAccess.open(s_file, FileAccess.WRITE)
+	
 	var state_dict: Dictionary = {
-		"settings" = {},
+		"sett_dict" = {},
 		"prog_array" = [],
-		"proc_dict" = {}
+		"proc_dict" = {},
+		"text_box" = "",
+		"ssf_label" = ""
 	}
 	
 	# important to DUPLICATE arrays and dictionaries. deep = true because some are nested
-	state_dict["settings"] = sett_dict.duplicate(true)
+	state_dict["sett_dict"] = sett_dict.duplicate(true)
 	state_dict["prog_array"] = prog_array.duplicate(true)
 	state_dict["proc_dict"] = prog_dict.duplicate(true)
 	
-	return state_dict
+	state_dict["text_box"] = text_box.get_text()
+	state_dict["ssf_label"] = ssf_label.get_text()
+	
+	var json = JSON.stringify(state_dict)
+	f.store_string(json)
+	f.close()
 
 # sets the settings and progress from a given dictionary (hopefully the one from when you saved) ;)
-func load_text_prog(old_state: Dictionary) -> void:
+func load_text_prog() -> void:
 	print("# -----* LOADING prog/text/etc")
 	
-	# reapply settings
-	sett_dict = old_state["settings"].duplicate(true)
-	set_setting_label(sett_dict["setting"])
-	set_bg_image(sett_dict["image"])
-	audio_mgr.change_song(int(sett_dict["music"]))
-	
-	# reapply progress array. buttons need refreshed
-	prog_array = old_state["prog_array"].duplicate(true)
-	button_mgr.refresh_tl_buttons(prog_array)
-	
-	# reapply progress dictionary
-	prog_dict = old_state["proc_dict"].duplicate(true)
+	if !FileAccess.file_exists(s_file):
+		push_error("File Not Found! :(")
+	else:
+		var f = FileAccess.open(s_file, FileAccess.READ)
+		var json = f.get_as_text()
+		var old_state = JSON.parse_string(json)
+		
+		# reapply settings
+		sett_dict = old_state["sett_dict"].duplicate(true)
+		set_setting_label(sett_dict["setting"])
+		set_bg_image(sett_dict["image"])
+		audio_mgr.change_song(int(sett_dict["music"]))
+		
+		# reapply progress array. buttons need refreshed
+		prog_array = old_state["prog_array"].duplicate(true)
+		button_mgr.refresh_tl_buttons(prog_array)
+		
+		# reapply progress dictionary
+		prog_dict = old_state["proc_dict"].duplicate(true)
+		
+		# set text boxes
+		set_text_box(old_state["text_box"])
+		set_ssf_label(old_state["ssf_label"])
+		
+		# realign ssf in ink manager
+		ink_mgr.story_so_far = old_state["ssf_label"] # i don't love this but... it works
+		
+		f.close()
 
 
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #

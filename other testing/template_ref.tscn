@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://0mtptcd1dyut"]
 
-[ext_resource type="Script" uid="uid://clob5c546dlbc" path="res://template_ref/node.gd" id="1_smr82"]
-[ext_resource type="Script" uid="uid://ycsuvwr4707k" path="res://template_ref/node_2.gd" id="2_0whci"]
+[ext_resource type="Script" uid="uid://clob5c546dlbc" path="res://other testing/node.gd" id="1_smr82"]
+[ext_resource type="Script" uid="uid://ycsuvwr4707k" path="res://other testing/node_2.gd" id="2_0whci"]
 
 [node name="Node" type="Node" unique_id=2004135194]
 

@@ -11,7 +11,8 @@ var NewInkPlayer = load("res://addons/inkgd/ink_player.gd")
 
 # Replace the path with the path to your story. UNIQUE
 var i_file: String = "res://story/testing.ink.json"
-var s_file: String = "res://story/saves/save.save"
+#var s_file: String = "res://story/saves/ink.save" # for testing?
+var s_file: String = "user://ink.save" # for prod?
 
 # some bools. i don't think these are strictly needed but they might be helpful in state management
 @export var is_loaded: bool = false
@@ -95,10 +96,7 @@ func _continue_story():
 		choice_array = _ink_player.current_choices
 		
 		button_mgr.clear_choice_buttons()
-		var choice_index: int = 0 # this will increment in order to assign the button to the correct choice index
-		for choice in choice_array: 
-			button_mgr.build_choice_buttons(choice, choice_index)
-			choice_index += 1
+		button_mgr.build_choice_buttons(choice_array)
 		
 	else: # This code runs when the story reaches it's end.
 		is_finished = true
@@ -135,23 +133,22 @@ func reset() -> void:
 # Saving and Loading the ink (what about my settings?) TODO
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-var ssf = ""
-var ct = ""
+#var ssf = ""   # this is just for testing #TODO savefile, they do not reset when reset button is pressed
+#var ct = ""
 
 func save_ink() -> void:
 	print("# -----* SAVING ink")
 	_ink_player.save_state_to_path(s_file)
-	ssf = story_so_far
-	ct = story_text
 
 
 func load_ink() -> void:
 	print("# -----* LOADING ink")
-	story_so_far = ""
-	_ink_player.load_state_from_path(s_file)
-	story_so_far = ssf
-	story_text = ct
-	_continue_story()
+	if !FileAccess.file_exists(s_file):
+		push_error("File Not Found! :(")
+	else:
+		_ink_player.load_state_from_path(s_file)
+		_continue_story()
+
 
 
 

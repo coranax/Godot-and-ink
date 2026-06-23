@@ -1,0 +1,14 @@
+[remap]
+
+importer="inkgd.ink.json"
+type="Resource"
+uid="uid://bbmy84gige6vj"
+valid=false
+
+[deps]
+
+source_file="res://story/saves/text.json"
+
+[params]
+
+compress=true

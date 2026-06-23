@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://d2bx4tkop72ui"]
+
+[ext_resource type="Script" uid="uid://debda075g1ox4" path="res://other testing/text_effect.gd" id="1_3vpht"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_3vpht"]
+script = ExtResource("1_3vpht")
+metadata/_custom_type_script = "uid://debda075g1ox4"
+
+[node name="TextEffectTesting" type="Control" unique_id=1232266943]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1672589000]
+clip_contents = false
+layout_mode = 0
+offset_right = 1196.0
+offset_bottom = 789.0
+bbcode_enabled = true
+text = "
+
+[test span=10.0 speed=2]
+0123456789012345678901234567890123456789
+[/test]
+"
+custom_effects = [SubResource("RichTextEffect_3vpht")]

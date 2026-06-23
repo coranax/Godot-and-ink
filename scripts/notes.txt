@@ -7,3 +7,13 @@ need to figure how to reset ssf
 current_loc?
 
 is it ok if it's not updated since it's just for progress?
+
+
+test saving with branching choices... i know you don't plan on having any but you should check this
+
+
+
+
+
+ append_text() - should i use this for the story so far and story text instead of the += that i have been relying on?
+i am thinking yes......

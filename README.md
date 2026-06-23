@@ -21,9 +21,12 @@ https://github.com/averyhiebert/inkgd/tree/godot4-updatetemplates/addons/inkgd/e
 they didn't work out of the box, i had to create a subfolder /Nodes/ then i was able to use the them.
 
 
-notes for future me
+notes for me who comes after
 
 keywords in comments:
 - UNIQUE: variable/path will vary per project
 - RESERVED: don't accidentaly use this name/var/whatever elsewhere
 check the notes at the beginning of the ink for reminders on related to ink strategy
+
+minimal work has been done on the UI on purpose, so that when this template/framework is used in a final project, it doesn't need to be picked apart and rebuilt.
+as a result, the scene tree is kindof a mess. forgive me, i'm new at this.

@@ -61,7 +61,7 @@ Chapter 1
 # setting: SAVE HERE ;)
 This is chapter 1 part one.... page 1
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
+[test speed=2][shake]Lorem ipsum dolor sit[/shake] amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.[/test]
 
 # title: chapter 1-1 # id: 0101
 + [nextch0101.1]
@@ -70,15 +70,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, po
 
 - This is chapter 1 part one.... page 2
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
+Lorem [test speed=0]ipsum dolor sit amet[/test], consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
 
 + [nextch0101.2]
 + [next2ch0101.2]
 + [next3ch0101.2]
 
 - This is chapter 1 part one.... page 3
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
+# setting: [test]how this looking.... ????[/test]
+Lorem ipsum dolor sit amet, [tornado]consectetur adipiscing[/tornado] elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla [rainbow]faucibus mi, nec aliquet[/rainbow] nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
 
 # finish: 0101
 + [nextch0101.3]
@@ -90,16 +90,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, po
 # setting: chapter 1-2 has a new setting BOYS
 This is chapter 1 part two.... page 1
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. [wave]Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna.[/wave] Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
 
 # title: chapter 1-2 # id: 0102 
 + [next]
 
-- This is chapter 1 part two.... page 2
+- [pulse]This is chapter 1 part two.... page 2[/pulse]
 
 + [next]
 
-- This is chapter 1 part two.... page 3
+- [fade]This is chapter 1 part two.... page 3[/fade]
 
 # finish: 0102
 + [next]

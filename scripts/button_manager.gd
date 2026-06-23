@@ -32,16 +32,19 @@ func _ready() -> void:
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
 # build the CHOICE buttons. this function is called within a loop!
-func build_choice_buttons(choice, id: int) -> void:
-	var cbutt: ChoiceButton = ChoiceButt.instantiate()
-	choice_container.add_child(cbutt)
-	cbutt.add_to_group("choice_buttons") # UNIQUE RESERVED - don't use this name for another group
-	cbutt.set_text(choice.text)
-	cbutt.button_id = id
-	cbutt.pressed.connect(_on_choice_button_press.bind(id))
-	cbutt.pressed.connect(audio_mgr.play_click.bind())
-	cbutt.set_h_size_flags(4)
-	cbutt.set_v_size_flags(1)
+func build_choice_buttons(choice_array: Array) -> void:
+	var choice_index: int = 0
+	for choice in choice_array:
+		var cbutt: ChoiceButton = ChoiceButt.instantiate()
+		choice_container.add_child(cbutt)
+		cbutt.add_to_group("choice_buttons") # UNIQUE RESERVED - don't use this name for another group
+		cbutt.set_text(choice.text)
+		cbutt.button_id = choice_index
+		cbutt.pressed.connect(_on_choice_button_press.bind(choice_index))
+		cbutt.pressed.connect(audio_mgr.play_click.bind())
+		cbutt.set_h_size_flags(4)
+		cbutt.set_v_size_flags(1)
+		choice_index += 1
 
 # build the TIMELINE buttons - this is called in the build_prog_array function. messy!
 func build_tl_buttons(prog: Array) -> void:
@@ -133,7 +136,7 @@ func _on_show_tl_pressed() -> void:
 	elif !time_line_choice_panel.visible:
 		time_line_choice_panel.visible = true
 		# build the timeline buttons based on the prog array
-		build_tl_buttons(text_mgr.prog_array)
+		refresh_tl_buttons(text_mgr.prog_array)
 
 # close the time line text box
 func _on_close_tl_pressed() -> void:
@@ -150,14 +153,12 @@ func _on_mute_sfx_pressed() -> void:
 
 # -----* Saving and Loading
 
-#TODO >_>
-var dict = {} # this is just for testing
 func _on_save_pressed() -> void:
 	print("# -----* SAVING BUTTON PRESSED :)")
 	ink_mgr.save_ink()
-	dict = text_mgr.save_text_prog()
+	text_mgr.save_text_prog()
 
 func _on_load_pressed() -> void:
 	print("# -----* LOADING BUTTON PRESSED :)")
-	text_mgr.load_text_prog(dict)
 	ink_mgr.load_ink()
+	text_mgr.load_text_prog()
