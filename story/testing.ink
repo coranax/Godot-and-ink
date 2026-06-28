@@ -63,14 +63,15 @@ This is chapter 1 part one.... page 1
 
 [test speed=2][shake]Lorem ipsum dolor sit[/shake] amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.[/test]
 
-# title: chapter 1-1 # id: 0101
-+ [nextch0101.1]
-+ [next2ch0101.1]
-+ [next3ch0101.1]
+# title: chapter 1-1 # id: 0101 # start: 0101
++ [201] -> ch2.one
++ [202] -> ch2.two
++ [203] -> ch2.three
++ [cont. here]
 
 - This is chapter 1 part one.... page 2
 
-Lorem [test speed=0]ipsum dolor sit amet[/test], consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
+Lorem [test speed=3]ipsum dolor sit amet[/test], consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
 
 + [nextch0101.2]
 + [next2ch0101.2]
@@ -92,7 +93,7 @@ This is chapter 1 part two.... page 1
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. [wave]Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna.[/wave] Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
 
-# title: chapter 1-2 # id: 0102 
+# title: chapter 1-2 # id: 0102 # start: 0102
 + [next]
 
 - [pulse]This is chapter 1 part two.... page 2[/pulse]
@@ -109,9 +110,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, po
 = three
 ~ current_loc = ch0103
 
+
 This is chapter 1 part three.... page 1
 
-# title: chapter 1-3 # id: 0103
+# title: chapter 1-3 # id: 0103 # start: 0103
 + [next]
 
 - This is chapter 1 part three.... page 2
@@ -144,10 +146,11 @@ Chapter 2
 = one
 ~ current_loc = ch0201
 
+
 This is chapter 2 part one.... page 1
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, porta eu sagittis vehicula, tincidunt vitae augue. Fusce ligula libero, pretium ut magna ut, facilisis tristique mi. Nulla hendrerit nisi dolor, vitae tincidunt odio eleifend id. Integer semper, turpis quis viverra tincidunt, mauris nulla faucibus mi, nec aliquet nunc erat a neque. Maecenas eu hendrerit lacus. Pellentesque auctor suscipit eros, vitae semper enim bibendum vel. Mauris posuere tincidunt tempus. Quisque vel volutpat enim, non eleifend magna. Vestibulum tristique ullamcorper massa, eu maximus erat pellentesque in.
-# title: chapter 2-1 # id: 0201
+# title: chapter 2-1 # id: 0201 # start: 0201
 + [next]
 - This is chapter 2 part one.... page 2
 
@@ -164,8 +167,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sem sapien, po
 = two
 ~ current_loc = ch0202
 
+
 This is chapter 2 part two.... page 1
-# title: chapter 2-2 # id: 0202
+# title: chapter 2-2 # id: 0202 # start: 0202
 + [next]
 - This is chapter 2 part two.... page 2
 + [next]
@@ -178,8 +182,9 @@ This is chapter 2 part two.... page 1
 = three
 ~ current_loc = ch0203
 
+
 This is chapter 2 part three.... page 1
-# title: chapter 2-3 # id: 0203
+# title: chapter 2-3 # id: 0203 # start: 0203
 + [next]
 - This is chapter 2 part three.... page 2
 + [next]
@@ -206,8 +211,9 @@ Chapter 3
 = one
 ~ current_loc = ch0301
 
+
 This is chapter 3 part one.... page 1
-# title: chapter 3-1 # id: 0301
+# title: chapter 3-1 # id: 0301 # start: 0301
 + [next]
 - This is chapter 3 part one.... page 2
 + [next]
@@ -220,8 +226,9 @@ This is chapter 3 part one.... page 1
 = two
 ~ current_loc = ch0302
 
+
 This is chapter 3 part two.... page 1
-# title: chapter 3-2 # id: 0302
+# title: chapter 3-2 # id: 0302 # start: 0302
 + [next]
 - This is chapter 3 part two.... page 2
 + [next]
@@ -234,8 +241,9 @@ This is chapter 3 part two.... page 1
 = three
 ~ current_loc = ch0303
 
+
 This is chapter 3 part three.... page 1
-# title: chapter 3-3 # id: 0303
+# title: chapter 3-3 # id: 0303 # start: 0303
 + [next]
 - This is chapter 3 part three.... page 2
 + [next]

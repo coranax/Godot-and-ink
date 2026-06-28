@@ -53,7 +53,7 @@ func _ready():
 # Story Flow
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-# is the story loaded?
+## is the story loaded?
 func _story_loaded(successfully: bool):
 	if !successfully:
 		return
@@ -62,11 +62,11 @@ func _story_loaded(successfully: bool):
 	# _bind_externals()
 	_continue_story()
 
-# public function for cont.
+## public function for cont.
 func continue_story() -> void:
 	_continue_story()
 
-# this one is doing a lot, it is the meat and potatoes of the story flow
+## this one is doing a lot, it is the meat and potatoes of the story flow
 func _continue_story():
 	story_text = ""
 	while _ink_player.can_continue:
@@ -104,26 +104,24 @@ func _continue_story():
 		has_choices = false
 		
 		button_mgr.clear_choice_buttons()
-		print("The End")
-		#print(text_manager.prog_array)
-		#print(text_manager.prog_dict)
+		#print("The End")
 
-# '_select_choice' is a function that will take the index of your selection and continue the story.
+## '_select_choice' is a function that will take the index of your selection and continue the story.
 func select_choice(index):
 	_ink_player.choose_choice_index(index)
 	_continue_story()
 
-#You can observe multiple variables by putting adding them in the array. UNIQUE
+## You can observe multiple variables by putting adding them in the array. UNIQUE
 func _observe_variables():
 	_ink_player.observe_variables(var_array, self, "_variable_changed")
 
-# adds the changed variables to a dictonary for observation elsewhere
+## adds the changed variables to a dictonary for observation elsewhere
 func _variable_changed(variable_name, new_value):
 	if var_array.has(variable_name):
 		changed_var_dict[variable_name] = new_value
-		print("Variable '%s' changed to: %s" %[variable_name, new_value])
+		#print("Variable '%s' changed to: %s" %[variable_name, new_value])
 
-# reset the story
+## reset the story
 func reset() -> void:
 	story_so_far = ""
 	_ink_player.reset()
@@ -133,16 +131,14 @@ func reset() -> void:
 # Saving and Loading the ink (what about my settings?) TODO
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-#var ssf = ""   # this is just for testing #TODO savefile, they do not reset when reset button is pressed
-#var ct = ""
 
 func save_ink() -> void:
-	print("# -----* SAVING ink")
+	#print("# -----* SAVING ink")
 	_ink_player.save_state_to_path(s_file)
 
 
 func load_ink() -> void:
-	print("# -----* LOADING ink")
+	#print("# -----* LOADING ink")
 	if !FileAccess.file_exists(s_file):
 		push_error("File Not Found! :(")
 	else:

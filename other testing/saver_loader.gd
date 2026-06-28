@@ -17,3 +17,7 @@ func save_game() -> void:
 
 func load_game() -> void:
 	pass
+
+
+
+#TODO :(

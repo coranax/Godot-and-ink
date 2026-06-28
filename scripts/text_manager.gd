@@ -26,7 +26,7 @@ var sett_dict: Dictionary = {
 var prog_array: Array = []
 var prog_dict: Dictionary = {}
 # for the dict
-var ch_id: int = 0
+var ch_id: String = ""
 var ch_title: String = ""
 var ch_body: String = ""
 
@@ -61,18 +61,18 @@ func _ready():
 # Text Boxes
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-# sets the main story text box. text will fade in, if the user button mashes it will break the effct but so it goes
+## sets the main story text box. text will fade in, if the user button mashes it will break the effct but so it goes
 func set_text_box(text: String)-> void:
 	text_box.set("theme_override_colors/default_color", Color(1,1,1,0))
 	var tween = get_tree().create_tween()
 	text_box.set_text(text)
 	tween.tween_property(text_box, "theme_override_colors/default_color", Color(1,1,1,1), 0.5)
 
-# sets the story so far label
+## sets the story so far label
 func set_ssf_label(text: String)-> void:
 	ssf_label.set_text(text)
 
-# sets the setting (title of sub section... probably needs a rename) label
+## sets the setting (title of sub section... probably needs a rename) label
 func set_setting_label(text: String) -> void:
 	setting_label.set("theme_override_colors/default_color", Color(1,1,1,0))
 	var tween = get_tree().create_tween()
@@ -84,7 +84,7 @@ func set_setting_label(text: String) -> void:
 # Tag Checkers
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-# this works hand in hand with the next one. would have liked to do it in one but i'm only so brave
+## this works hand in hand with the next one. would have liked to do it in one but i'm only so brave
 func is_tag_listed(tags: Array, item: String) -> bool:
 	# deliminatior
 	var d = ": "
@@ -101,7 +101,7 @@ func is_tag_listed(tags: Array, item: String) -> bool:
 					return is_listed
 	return is_listed
 
-# search for a tag in ink, and return the slice after the ": " deliminator UNIQUE
+## search for a tag in ink, and return the slice after the ": " deliminator UNIQUE
 func get_tag_slice(tags: Array, item: String) -> String:
 	# deliminatior
 	var d = ": "
@@ -124,7 +124,7 @@ func get_tag_slice(tags: Array, item: String) -> String:
 # Game Settings
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-# these are the game elements that will change based on the "setting" (ink tags) of the story UNIQUE
+## these are the game elements that will change based on the "setting" (ink tags) of the story UNIQUE
 func build_setting(tags: Array) -> void:
 	if is_tag_listed(tags, "setting"):
 		set_setting_label(get_tag_slice(tags, "setting"))
@@ -136,7 +136,7 @@ func build_setting(tags: Array) -> void:
 		audio_mgr.change_song(int(get_tag_slice(tags, "music")))
 		sett_dict["music"] = get_tag_slice(tags, "music")
 
-# makes the background image fade out then fade in with the new one.
+## makes the background image fade out then fade in with the new one.
 func set_bg_image(file: String) -> void:
 	# remember to change bgi_path (above) if needed
 	var tween_out = get_tree().create_tween()
@@ -151,7 +151,7 @@ func set_bg_image(file: String) -> void:
 # Progress
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-# stores the player's progress in an array when it hits "finish" UNIQUE
+## stores the player's progress in an array when it hits "finish" UNIQUE
 func build_prog_array(tags: Array):
 	if is_tag_listed(tags, "finish"):
 		if !prog_array.has(get_tag_slice(tags,"finish")): # make sure this section is not already included
@@ -159,27 +159,30 @@ func build_prog_array(tags: Array):
 			prog_array.sort()
 			button_mgr.refresh_tl_buttons(prog_array)
 
-# this is called when there are choices since that is where the finish tag is. UNIQUE
+## this is called when there are choices since that is where the finish tag is. UNIQUE
 func build_prog_dict(tags: Array) -> void:
 	var current_loc = str(ink_mgr.changed_var_dict["current_loc"])
-
-	if loc_list.has(current_loc):
+	
+	if is_tag_listed(tags, "start"): # clear the chapter body if the start tag is reached (new section)
+		ch_body = ""
+	
+	if loc_list.has(current_loc): # if in one of the designated locations, update the chapter body
 		ch_body += text_box.get_text()
 	
 	if is_tag_listed(tags, "id"):
-		ch_id = int(get_tag_slice(tags, "id"))
+		ch_id = get_tag_slice(tags, "id")
 		
 	if is_tag_listed(tags, "title"):
 		ch_title = get_tag_slice(tags, "title")
 	
-	if is_tag_listed(tags, "finish"):
+	if is_tag_listed(tags, "finish"): # record the progress once the finish tag is reached
 		var new_prog: Dictionary = {
 			"id:" = ch_id,
 			"title" = ch_title,
 			"body" = ch_body
 			}
 		prog_dict.set(ch_id, new_prog)
-		ch_body = ""
+		ch_body = "" # reset chapter body now that the progress has been recorded
 
 
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
@@ -187,15 +190,15 @@ func build_prog_dict(tags: Array) -> void:
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 # these functions are strictly game engine side, and will need to work in tandem with saving and loading the ink file
 
-# gathers the current settings and progress and stores in a dictionary
+## gathers the current settings and progress and stores in a dictionary
 func save_text_prog() -> void:
-	print("# -----* SAVING prog/text/etc")
+	#print("# -----* SAVING prog/text/etc")
 	var f = FileAccess.open(s_file, FileAccess.WRITE)
 	
 	var state_dict: Dictionary = {
 		"sett_dict" = {},
 		"prog_array" = [],
-		"proc_dict" = {},
+		"prog_dict" = {},
 		"text_box" = "",
 		"ssf_label" = ""
 	}
@@ -203,7 +206,7 @@ func save_text_prog() -> void:
 	# important to DUPLICATE arrays and dictionaries. deep = true because some are nested
 	state_dict["sett_dict"] = sett_dict.duplicate(true)
 	state_dict["prog_array"] = prog_array.duplicate(true)
-	state_dict["proc_dict"] = prog_dict.duplicate(true)
+	state_dict["prog_dict"] = prog_dict.duplicate(true)
 	
 	state_dict["text_box"] = text_box.get_text()
 	state_dict["ssf_label"] = ssf_label.get_text()
@@ -212,36 +215,36 @@ func save_text_prog() -> void:
 	f.store_string(json)
 	f.close()
 
-# sets the settings and progress from a given dictionary (hopefully the one from when you saved) ;)
+## sets the settings and progress from a given dictionary (hopefully the one from when you saved) ;)
 func load_text_prog() -> void:
-	print("# -----* LOADING prog/text/etc")
+	#print("# -----* LOADING prog/text/etc")
 	
 	if !FileAccess.file_exists(s_file):
 		push_error("File Not Found! :(")
 	else:
 		var f = FileAccess.open(s_file, FileAccess.READ)
 		var json = f.get_as_text()
-		var old_state = JSON.parse_string(json)
+		var save = JSON.parse_string(json)
 		
 		# reapply settings
-		sett_dict = old_state["sett_dict"].duplicate(true)
+		sett_dict = save["sett_dict"].duplicate(true)
 		set_setting_label(sett_dict["setting"])
 		set_bg_image(sett_dict["image"])
 		audio_mgr.change_song(int(sett_dict["music"]))
 		
 		# reapply progress array. buttons need refreshed
-		prog_array = old_state["prog_array"].duplicate(true)
+		prog_array = save["prog_array"].duplicate(true)
 		button_mgr.refresh_tl_buttons(prog_array)
 		
 		# reapply progress dictionary
-		prog_dict = old_state["proc_dict"].duplicate(true)
+		prog_dict = save["prog_dict"].duplicate(true)
 		
 		# set text boxes
-		set_text_box(old_state["text_box"])
-		set_ssf_label(old_state["ssf_label"])
+		set_text_box(save["text_box"])
+		set_ssf_label(save["ssf_label"])
 		
 		# realign ssf in ink manager
-		ink_mgr.story_so_far = old_state["ssf_label"] # i don't love this but... it works
+		ink_mgr.story_so_far = save["ssf_label"] # i don't love this but... it works
 		
 		f.close()
 
@@ -250,7 +253,7 @@ func load_text_prog() -> void:
 # Reset
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-# reset the settings and progress trackers
+## reset the settings and progress trackers
 func reset_progress() -> void:
 	prog_array = []
 	prog_dict = {}

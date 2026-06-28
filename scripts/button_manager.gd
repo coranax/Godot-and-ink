@@ -31,7 +31,7 @@ func _ready() -> void:
 # Build Buttons
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-# build the CHOICE buttons. this function is called within a loop!
+## build the CHOICE buttons. this function is called within a loop!
 func build_choice_buttons(choice_array: Array) -> void:
 	var choice_index: int = 0
 	for choice in choice_array:
@@ -46,7 +46,7 @@ func build_choice_buttons(choice_array: Array) -> void:
 		cbutt.set_v_size_flags(1)
 		choice_index += 1
 
-# build the TIMELINE buttons - this is called in the build_prog_array function. messy!
+## build the TIMELINE buttons - this is called in the build_prog_array function. messy!
 func build_tl_buttons(prog: Array) -> void:
 	for p in prog:
 		var tlbutt: ChoiceButton = ChoiceButt.instantiate() # it's not really a choice button but whatever. she's fine.
@@ -64,16 +64,17 @@ func build_tl_buttons(prog: Array) -> void:
 # Clear Buttons
 # -----*-----*-----*-----*-----*-----*-----*-----*-----*-----*-----*----- #
 
-# clear the CHOICE buttons, or else they will just multiply forever and ever
+## clear the CHOICE buttons, or else they will just multiply forever and ever
 func clear_choice_buttons() -> void:
 	for button in get_tree().get_nodes_in_group("choice_buttons"):
 		button.queue_free()
 
-# clear the TIMELINE buttons, or else they will just multiply forever and ever
+## clear the TIMELINE buttons, or else they will just multiply forever and ever
 func clear_tl_buttons() -> void:
 	for button in get_tree().get_nodes_in_group("time_line_buttons"):
 		button.queue_free()
-
+		
+## refresh the TIMELINE buttons, or else they will just multiply forever and eve
 func refresh_tl_buttons(prog: Array) -> void:
 	clear_tl_buttons()
 	build_tl_buttons(prog)
@@ -84,15 +85,15 @@ func refresh_tl_buttons(prog: Array) -> void:
 
 # -----* Instantiated buttons
 
-# a choice button has been pressed # blessed
+## a choice button has been pressed # blessed
 func _on_choice_button_press(id: int) -> void:
 	ink_mgr.select_choice(id)
 	text_box.scroll_to_line(0)
 
-# displays the timeline text if one of the timeline buttons is pressed
+## displays the timeline text if one of the timeline buttons is pressed
 func _on_show_time_line_text(id: String) -> void:
 	# should i disable some buttons while timeline is open? no, not now
-	var text = text_mgr.prog_dict[int(id)]["body"]
+	var text = text_mgr.prog_dict[id]["body"]
 	
 	if !time_line_text_panel.visible:
 		time_line_text_panel.visible = true
@@ -108,7 +109,7 @@ func _on_show_time_line_text(id: String) -> void:
 
 # -----* Static buttons
 
-# clear and reset the story
+## clear and reset the story
 func _on_reset_button_pressed() -> void:
 	text_mgr.reset_progress()
 	
@@ -121,14 +122,14 @@ func _on_reset_button_pressed() -> void:
 	
 	ink_mgr.reset()
 
-# hide or unhide the story so far
+## hide or unhide the story so far
 func _on_show_ssf_pressed() -> void:
 	if ssf_label.visible == true:
 		ssf_label.visible = false
 	elif ssf_label.visible == false:
 		ssf_label.visible = true
 
-# hide or unhide the timeline panel
+## hide or unhide the timeline panel
 func _on_show_tl_pressed() -> void:
 	if time_line_choice_panel.visible:
 		time_line_choice_panel.visible = false
@@ -138,27 +139,29 @@ func _on_show_tl_pressed() -> void:
 		# build the timeline buttons based on the prog array
 		refresh_tl_buttons(text_mgr.prog_array)
 
-# close the time line text box
+## close the time line text box
 func _on_close_tl_pressed() -> void:
 	if time_line_text_panel.visible:
 		time_line_text_panel.visible = false
 	pass # Replace with function body.
 
-# mute the music and sfx
+## mute the music
 func _on_mute_music_pressed() -> void:
 	audio_mgr.mute_music()
-
+	
+## mute the sfx
 func _on_mute_sfx_pressed() -> void:
 	audio_mgr.mute_sfx()
 
 # -----* Saving and Loading
 
 func _on_save_pressed() -> void:
-	print("# -----* SAVING BUTTON PRESSED :)")
+	#print("# -----* SAVING BUTTON PRESSED :)")
 	ink_mgr.save_ink()
 	text_mgr.save_text_prog()
 
 func _on_load_pressed() -> void:
-	print("# -----* LOADING BUTTON PRESSED :)")
+	#print("# -----* LOADING BUTTON PRESSED :)")
+	_on_reset_button_pressed()
 	ink_mgr.load_ink()
 	text_mgr.load_text_prog()

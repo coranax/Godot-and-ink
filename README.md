@@ -30,3 +30,6 @@ check the notes at the beginning of the ink for reminders on related to ink stra
 
 minimal work has been done on the UI on purpose, so that when this template/framework is used in a final project, it doesn't need to be picked apart and rebuilt.
 as a result, the scene tree is kindof a mess. forgive me, i'm new at this.
+
+the progress tracking has become a little convoluted. i would like to think of a better way to record how far the reader has come and specifically which passages the reader has encountered.
+the issue is communicating from ink to godot where the reader is.
